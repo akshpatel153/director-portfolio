@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Outfit', sans-serif;
+  --color-background: #F0F0F0;
+  --color-foreground: #121212;
+  --color-primary-red: #D02020;
+  --color-primary-blue: #1040C0;
+  --color-primary-yellow: #F0C020;
+  --color-border: #121212;
+  --color-muted: #E0E0E0;
+  --shadow-small: 4px 4px 0px 0px black;
+  --shadow-medium: 6px 6px 0px 0px black;
+  --shadow-large: 8px 8px 0px 0px black;
+}
+
+@utility bg-pattern-dots {
+  background-image: radial-gradient(#121212 2px, transparent 2px);
+  background-size: 20px 20px;
+  opacity: 0.1;
+}
+
+@utility outline-text-black {
+  -webkit-text-stroke: 4px #121212;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+}
