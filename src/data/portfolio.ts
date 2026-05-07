@@ -20,6 +20,8 @@ export const PARALLAX_IMAGES = {
   secondImage: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1600"
 };
 
+export const PARALLAX_VIDEO = "/Animate_add_camera_zoom_dust_202605071439.mp4";
+
 export const ABOUT_ME = {
   title: "The Director",
   bio: "I am a visual architect obsessed with structure, light, and pacing. I love photography and videography, but my true passion lies in the edit—piecing together raw footage into high-impact narratives. Every frame serves a purpose. Every cut is calculated.",
