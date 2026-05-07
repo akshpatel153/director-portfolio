@@ -17,10 +17,8 @@ export const PHILOSOPHY_CONTENT = {
 
 export const PARALLAX_IMAGES = {
   firstImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1600",
-  secondImage: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1600"
+  secondImage: "/images/optimized/Image-re-3.webp"
 };
-
-export const PARALLAX_VIDEO = "/Animate_add_camera_zoom_dust_202605071439.mp4";
 
 export const ABOUT_ME = {
   title: "The Director",
