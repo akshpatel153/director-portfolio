@@ -33,8 +33,8 @@ export function ParallaxImage({ src, alt, height = "h-[100vh]", className = "" }
           alt={alt}
           className="w-full h-full object-cover grayscale" 
         />
-        {/* Constructivist Overlay: A semi-transparent primary color tint block */}
-        <div className="absolute inset-0 bg-primary-red mix-blend-multiply opacity-40"></div>
+        {/* Dark Overlay for better contrast */}
+        <div className="absolute inset-0 bg-black opacity-40"></div>
       </motion.div>
     </div>
   );
