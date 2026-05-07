@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValueEvent, useSpring } from 'framer-motion';
 
 interface ParallaxVideoProps {
   src: string;
@@ -23,11 +23,23 @@ export function ParallaxVideo({
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+  // Apply spring physics to smooth out the choppiness of scroll scrubbing
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+  const y = useTransform(smoothProgress, [0, 1], ["-20%", "20%"]);
+
+  useMotionValueEvent(smoothProgress, "change", (latest) => {
     if (videoRef.current && duration > 0) {
-      videoRef.current.currentTime = latest * duration;
+      // Use requestAnimationFrame to ensure the video only updates exactly when the browser paints
+      requestAnimationFrame(() => {
+        if (videoRef.current) {
+          videoRef.current.currentTime = latest * duration;
+        }
+      });
     }
   });
 
