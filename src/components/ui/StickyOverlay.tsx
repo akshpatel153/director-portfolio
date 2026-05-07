@@ -10,7 +10,7 @@ export function StickyOverlay() {
 
   useEffect(() => {
     const currentMessage = STICKY_MESSAGES[messageIndex];
-    let timeout: NodeJS.Timeout;
+    let timeout: ReturnType<typeof setTimeout>;
 
     if (isTyping) {
       if (displayedText.length < currentMessage.length) {

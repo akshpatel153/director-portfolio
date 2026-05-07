@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { Button } from '../ui/Button';
 import { HeroScene } from '../3d/HeroScene';
 import { motion } from 'framer-motion';
 import { HERO_CONTENT } from '../../data/portfolio';
