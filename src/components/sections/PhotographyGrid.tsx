@@ -28,7 +28,7 @@ function ParallaxPhoto({ photo, config, index, onClick }: {
   });
   
   // pronounced parallax movement
-  const y = useTransform(scrollYProgress, [0, 1], ['-15%', '15%']);
+  const y = useTransform(scrollYProgress, [0, 1], ['-25%', '25%']);
 
   return (
     <motion.div
@@ -46,7 +46,7 @@ function ParallaxPhoto({ photo, config, index, onClick }: {
           style={{ y }}
           src={photo.src}
           alt={photo.title}
-          className="absolute inset-0 w-full h-[130%] -top-[15%] object-cover grayscale group-hover:grayscale-0 transition-[filter] duration-700"
+          className="absolute inset-0 w-full h-[150%] -top-[25%] object-cover grayscale group-hover:grayscale-0 transition-[filter] duration-700"
         />
 
         {/* Dark overlay */}
@@ -76,7 +76,7 @@ function FillerWithParallax() {
     target: ref, 
     offset: ['start end', 'end start'] 
   });
-  const y = useTransform(scrollYProgress, [0, 1], ['-30px', '30px']);
+  const y = useTransform(scrollYProgress, [0, 1], ['-60px', '60px']);
 
   return (
     <div ref={ref} className="md:col-span-1 border-4 border-black bg-black overflow-hidden relative min-h-[300px] flex items-center justify-center">
