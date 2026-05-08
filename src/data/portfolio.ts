@@ -16,8 +16,8 @@ export const PHILOSOPHY_CONTENT = {
 };
 
 export const PARALLAX_IMAGES = {
-  firstImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1600",
-  secondImage: "/images/optimized/Image-re-3.webp"
+  firstImage: "/images/optimized/Image-ree-3.webp",
+  secondImage: "/images/building-parallax.png"
 };
 
 export const ABOUT_ME = {

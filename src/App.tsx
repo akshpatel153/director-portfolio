@@ -15,6 +15,7 @@ import { About } from './pages/About';
 import { StickyOverlay } from './components/ui/StickyOverlay';
 import { AudioPlayer } from './components/ui/AudioPlayer';
 import { Preloader } from './components/ui/Preloader';
+import { ScrollToTop } from './components/ui/ScrollToTop';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -37,6 +38,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       {/* Preloader overlay */}
       <AnimatePresence>
         {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}

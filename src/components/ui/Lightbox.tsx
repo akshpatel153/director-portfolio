@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface LightboxProps {
@@ -8,6 +9,17 @@ interface LightboxProps {
 }
 
 export function Lightbox({ isOpen, onClose, image, title }: LightboxProps) {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   return (
     <AnimatePresence>
       {isOpen && image && (
