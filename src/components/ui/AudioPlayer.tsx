@@ -43,7 +43,7 @@ export function AudioPlayer() {
       <div className="pointer-events-auto flex items-center bg-white border-[2px] border-black px-3 py-2 rounded-t-2xl rounded-br-2xl rounded-bl-sm shadow-[-3px_3px_0px_0px_#FFD700]">
 
         {/* Play / Equalizer toggle */}
-        <button onClick={togglePlay} className="mr-2 shrink-0">
+        <button onClick={togglePlay} className={`shrink-0 ${isPlaying ? 'mr-2' : ''}`}>
           {isPlaying ? (
             <div className="flex gap-[2px] h-3 items-end">
               <motion.div animate={{ height: ["3px", "10px", "3px"] }} transition={{ repeat: Infinity, duration: 0.5 }} className="w-[2px] bg-black" />
@@ -57,26 +57,26 @@ export function AudioPlayer() {
           )}
         </button>
 
-        {/* Track name */}
-        <span className="font-bold tracking-widest text-black text-[10px] whitespace-nowrap">
-          {TRACKS[trackIndex].label}
-        </span>
-
-        {/* Blinking cursor when playing */}
+        {/* Track name + controls — only when playing */}
         {isPlaying && (
-          <motion.span
-            animate={{ opacity: [1, 0] }}
-            transition={{ repeat: Infinity, duration: 0.8 }}
-            className="inline-block w-1.5 h-2.5 bg-primary-yellow ml-1.5 align-middle"
-          />
-        )}
+          <>
+            <span className="font-bold tracking-widest text-black text-[10px] whitespace-nowrap">
+              {TRACKS[trackIndex].label}
+            </span>
 
-        {/* Next track button */}
-        <button onClick={nextTrack} className="ml-2 shrink-0 opacity-40 hover:opacity-100 transition-opacity" title="Next track">
-          <svg className="w-3 h-3 text-black" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M6 18l8.5-6L6 6v12zm8.5-6l-8.5 6V6l8.5 6zM16 6v12h2V6h-2z" />
-          </svg>
-        </button>
+            <motion.span
+              animate={{ opacity: [1, 0] }}
+              transition={{ repeat: Infinity, duration: 0.8 }}
+              className="inline-block w-1.5 h-2.5 bg-primary-yellow ml-1.5 align-middle"
+            />
+
+            <button onClick={nextTrack} className="ml-2 shrink-0 opacity-40 hover:opacity-100 transition-opacity" title="Next track">
+              <svg className="w-3 h-3 text-black" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6 18l8.5-6L6 6v12zm8.5-6l-8.5 6V6l8.5 6zM16 6v12h2V6h-2z" />
+              </svg>
+            </button>
+          </>
+        )}
 
       </div>
     </div>
