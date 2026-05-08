@@ -24,11 +24,15 @@ export function AudioPlayer() {
     setIsPlaying(!isPlaying);
   };
 
-  const nextTrack = (e?: React.MouseEvent) => {
-    if (e) e.stopPropagation();
+  const advanceTrack = () => {
     const next = (trackIndex + 1) % TRACKS.length;
     setTrackIndex(next);
     setIsPlaying(true);
+  };
+
+  const nextTrack = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    advanceTrack();
   };
 
   const handleCanPlay = () => {
@@ -39,7 +43,7 @@ export function AudioPlayer() {
 
   return (
     <div className="fixed bottom-6 left-6 z-50 flex items-end justify-start pointer-events-none">
-      <audio ref={audioRef} src={TRACKS[trackIndex].src} onEnded={nextTrack} onCanPlay={handleCanPlay} />
+      <audio ref={audioRef} src={TRACKS[trackIndex].src} onEnded={advanceTrack} onCanPlay={handleCanPlay} />
 
       {/* Bubble — layout animates its width smoothly */}
       <motion.div
