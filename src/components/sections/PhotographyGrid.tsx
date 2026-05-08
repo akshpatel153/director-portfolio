@@ -75,7 +75,6 @@ function FillerWithParallax({ text }: { text?: string }) {
     target: ref, 
     offset: ['start end', 'end start'] 
   });
-  const y = useTransform(scrollYProgress, [0, 1], ['-60px', '60px']);
 
   return (
     <div ref={ref} className="md:col-span-1 border-4 border-black bg-black overflow-hidden relative min-h-[300px] flex items-center justify-center group">
