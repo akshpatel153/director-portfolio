@@ -3,7 +3,6 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { GALLERY_PHOTOS } from '../../data/portfolio';
 import { Lightbox } from '../ui/Lightbox';
-import { GlitchLogo } from '../ui/GlitchLogo';
 
 // Asymmetric brutalist grid config: [col-span, row-span, aspect]
 const GRID_CONFIG = [
@@ -84,17 +83,13 @@ function FillerWithParallax({ text }: { text?: string }) {
       {text && (
         <motion.div 
           style={{ y: useTransform(scrollYProgress, [0, 1], ['20px', '-20px']) }}
-          className="absolute inset-0 flex items-center justify-center opacity-[0.05] pointer-events-none"
+          className="absolute inset-0 flex items-center justify-center opacity-[0.1] pointer-events-none"
         >
           <span className="text-8xl font-black uppercase tracking-tighter whitespace-nowrap">
             {text}
           </span>
         </motion.div>
       )}
-
-      <motion.div style={{ y }} className="w-full h-full flex items-center justify-center z-10">
-        <GlitchLogo />
-      </motion.div>
     </div>
   );
 }
