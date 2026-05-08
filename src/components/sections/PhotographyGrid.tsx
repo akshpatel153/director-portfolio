@@ -1,10 +1,8 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { GALLERY_PHOTOS } from '../../data/portfolio';
-
-// Show first 6 on the home page
-const FEATURED = GALLERY_PHOTOS.slice(0, 6);
+import { Lightbox } from '../ui/Lightbox';
 
 // Asymmetric brutalist grid config: [col-span, row-span, aspect]
 const GRID_CONFIG = [
@@ -16,10 +14,11 @@ const GRID_CONFIG = [
   { cols: 'md:col-span-1', aspect: 'aspect-[3/4]' },
 ];
 
-function ParallaxPhoto({ photo, config, index }: {
+function ParallaxPhoto({ photo, config, index, onClick }: {
   photo: { src: string; title: string };
   config: { cols: string; aspect: string };
   index: number;
+  onClick: () => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
@@ -28,7 +27,8 @@ function ParallaxPhoto({ photo, config, index }: {
   return (
     <motion.div
       ref={ref}
-      className={`${config.cols} relative overflow-hidden border-4 border-black group`}
+      onClick={onClick}
+      className={`${config.cols} relative overflow-hidden border-4 border-black group cursor-zoom-in`}
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
@@ -64,44 +64,69 @@ function ParallaxPhoto({ photo, config, index }: {
   );
 }
 
-export function PhotographyGrid() {
+export function PhotographyGrid({ featured = false }: { featured?: boolean }) {
+  const displayPhotos = featured ? GALLERY_PHOTOS.slice(0, 6) : GALLERY_PHOTOS;
+  const [lightbox, setLightbox] = useState<{ isOpen: boolean; image: string | null; title: string | null }>({
+    isOpen: false,
+    image: null,
+    title: null
+  });
+
+  const openLightbox = (image: string, title: string) => {
+    setLightbox({ isOpen: true, image, title });
+  };
+
   return (
-    <section className="w-full bg-black text-white py-24 border-b-8 border-black" id="photography">
+    <section className={`w-full ${featured ? 'bg-black' : 'bg-[#121212]'} text-white py-24 border-b-8 border-black`} id="photography">
 
       {/* Section header */}
       <div className="px-6 md:px-12 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
           <p className="font-black uppercase tracking-[0.4em] text-primary-red text-xs mb-3">
-            — Visual Archive
+            — {featured ? 'Visual Archive' : 'Full Collection'}
           </p>
           <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none text-white">
-            SHOTS
+            {featured ? 'SHOTS' : 'ARCHIVE'}
           </h2>
         </div>
 
-        <div className="flex flex-col items-start md:items-end gap-4">
-          <p className="text-white/40 font-bold uppercase tracking-widest text-xs max-w-xs text-left md:text-right leading-relaxed">
-            High contrast. Sharp angles.<br />Uncompromising composition.
-          </p>
-          <Link
-            to="/photography"
-            className="inline-flex items-center gap-3 border-2 border-white text-white font-black uppercase tracking-widest text-xs px-5 py-3 hover:bg-white hover:text-black transition-all duration-200"
-          >
-            Full Gallery
-            <span className="text-base">→</span>
-          </Link>
-        </div>
+        {featured && (
+          <div className="flex flex-col items-start md:items-end gap-4">
+            <p className="text-white/40 font-bold uppercase tracking-widest text-xs max-w-xs text-left md:text-right leading-relaxed">
+              High contrast. Sharp angles.<br />Uncompromising composition.
+            </p>
+            <Link
+              to="/photography"
+              className="inline-flex items-center gap-3 border-2 border-white text-white font-black uppercase tracking-widest text-xs px-5 py-3 hover:bg-white hover:text-black transition-all duration-200"
+            >
+              Full Gallery
+              <span className="text-base">→</span>
+            </Link>
+          </div>
+        )}
       </div>
 
       {/* Asymmetric brutalist grid */}
       <div className="px-6 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-1 border-4 border-black">
-          {FEATURED.map((photo, i) => (
-            <ParallaxPhoto key={i} photo={photo} config={GRID_CONFIG[i]} index={i} />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-1 border-4 border-black bg-black">
+          {displayPhotos.map((photo, i) => (
+            <ParallaxPhoto 
+              key={i} 
+              photo={photo} 
+              config={GRID_CONFIG[i % GRID_CONFIG.length]} 
+              index={i} 
+              onClick={() => openLightbox(photo.src, photo.title)}
+            />
           ))}
         </div>
       </div>
 
+      <Lightbox 
+        isOpen={lightbox.isOpen} 
+        onClose={() => setLightbox({ ...lightbox, isOpen: false })} 
+        image={lightbox.image} 
+        title={lightbox.title} 
+      />
     </section>
   );
 }

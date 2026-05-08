@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GALLERY_PHOTOS } from '../../data/portfolio';
+import { Lightbox } from './Lightbox';
 
 export function HorizontalScrollGallery() {
   const [current, setCurrent] = useState(0);
@@ -18,6 +19,16 @@ export function HorizontalScrollGallery() {
     exit: (d: number) => ({ x: d > 0 ? '-100%' : '100%', opacity: 0 }),
   };
 
+  const [lightbox, setLightbox] = useState<{ isOpen: boolean; image: string | null; title: string | null }>({
+    isOpen: false,
+    image: null,
+    title: null
+  });
+
+  const openLightbox = (image: string, title: string) => {
+    setLightbox({ isOpen: true, image, title });
+  };
+
   return (
     <section className="w-full bg-[#121212] py-16 px-6 border-b-4 border-black md:hidden">
       {/* Header */}
@@ -32,7 +43,7 @@ export function HorizontalScrollGallery() {
       </div>
 
       {/* Carousel frame */}
-      <div className="relative aspect-[4/5] w-full border-4 border-white overflow-hidden bg-black">
+      <div className="relative aspect-[4/5] w-full border-4 border-white overflow-hidden bg-black cursor-zoom-in" onClick={() => openLightbox(GALLERY_PHOTOS[current].src, GALLERY_PHOTOS[current].title)}>
         <AnimatePresence custom={direction} initial={false} mode="popLayout">
           <motion.img
             key={current}
@@ -60,18 +71,25 @@ export function HorizontalScrollGallery() {
       {/* Navigation buttons */}
       <div className="flex gap-2 mt-4">
         <button
-          onClick={() => paginate(-1)}
+          onClick={(e) => { e.stopPropagation(); paginate(-1); }}
           className="flex-1 bg-white border-2 border-black py-3 font-black uppercase tracking-widest text-xs text-black shadow-[3px_3px_0px_0px_#D02020] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all"
         >
           ← Prev
         </button>
         <button
-          onClick={() => paginate(1)}
+          onClick={(e) => { e.stopPropagation(); paginate(1); }}
           className="flex-1 bg-white border-2 border-black py-3 font-black uppercase tracking-widest text-xs text-black shadow-[3px_3px_0px_0px_#1040C0] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all"
         >
           Next →
         </button>
       </div>
+
+      <Lightbox 
+        isOpen={lightbox.isOpen} 
+        onClose={() => setLightbox({ ...lightbox, isOpen: false })} 
+        image={lightbox.image} 
+        title={lightbox.title} 
+      />
     </section>
   );
 }
