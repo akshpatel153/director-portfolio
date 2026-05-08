@@ -9,9 +9,9 @@ const NAV_LINKS = [
 ];
 
 const SOCIAL_LINKS = [
-  { label: 'Instagram', href: 'https://instagram.com' },
-  { label: 'YouTube', href: 'https://youtube.com' },
-  { label: 'Twitter / X', href: 'https://twitter.com' },
+  { label: 'YouTube', href: 'https://www.youtube.com/@HimymBeats/featured' },
+  { label: 'Instagram', href: 'https://www.instagram.com/aksh.ae_' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/aksh-patel-cs/' },
 ];
 
 export function Footer() {
