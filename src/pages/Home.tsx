@@ -1,5 +1,4 @@
 import { Hero } from '../components/sections/Hero';
-import { PageTransition } from '../components/layout/PageTransition';
 import { ParallaxImage } from '../components/ui/ParallaxImage';
 import { DesktopScrollGallery } from '../components/ui/DesktopScrollGallery';
 import { HorizontalScrollGallery } from '../components/ui/HorizontalScrollGallery';
