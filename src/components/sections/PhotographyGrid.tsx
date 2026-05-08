@@ -82,21 +82,25 @@ function FillerWithParallax() {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % words.length);
-    }, 150); // super fast cycle
+    }, 2000); // Linger for 2 seconds (slow)
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div ref={ref} className="md:col-span-1 border-4 border-black bg-black overflow-hidden relative min-h-[300px] flex items-center justify-center group">
-      {/* Background Text Cycling with Blur Transition */}
+      {/* Background Text Cycling with Fast-Slow-Fast Transition */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
-            initial={{ x: 20, opacity: 0, filter: 'blur(10px)' }}
+            initial={{ x: 40, opacity: 0, filter: 'blur(20px)' }}
             animate={{ x: 0, opacity: 0.15, filter: 'blur(0px)' }}
-            exit={{ x: -20, opacity: 0, filter: 'blur(10px)' }}
-            transition={{ duration: 0.1, ease: "easeOut" }}
+            exit={{ x: -40, opacity: 0, filter: 'blur(20px)' }}
+            transition={{ 
+              duration: 0.4, 
+              ease: [0.23, 1, 0.32, 1], // Power4.out equivalent for snappy arrival
+              opacity: { duration: 0.2 }
+            }}
             style={{ y: useTransform(scrollYProgress, [0, 1], ['20px', '-20px']) }}
             className="flex items-center justify-center"
           >
