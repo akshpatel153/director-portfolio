@@ -28,6 +28,8 @@ function AnimatedRoutes() {
 }
 
 import { StickyOverlay } from './components/ui/StickyOverlay';
+import { AudioPlayer } from './components/ui/AudioPlayer';
+
 
 function App() {
   return (
@@ -39,6 +41,7 @@ function App() {
         </main>
         <Footer />
         <StickyOverlay />
+        <AudioPlayer />
       </div>
     </Router>
   );
