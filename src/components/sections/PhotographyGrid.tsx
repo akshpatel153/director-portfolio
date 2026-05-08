@@ -27,9 +27,8 @@ function ParallaxPhoto({ photo, config, index, onClick }: {
     offset: ['start end', 'end start'] 
   });
   
-  // More pronounced parallax movement
+  // pronounced parallax movement
   const y = useTransform(scrollYProgress, [0, 1], ['-15%', '15%']);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.15, 1, 1.15]);
 
   return (
     <motion.div
@@ -44,17 +43,14 @@ function ParallaxPhoto({ photo, config, index, onClick }: {
       <div className={`${config.aspect} w-full relative overflow-hidden bg-black`}>
         {/* Parallax image with depth */}
         <motion.img
-          style={{ y, scale }}
+          style={{ y }}
           src={photo.src}
           alt={photo.title}
           className="absolute inset-0 w-full h-[130%] -top-[15%] object-cover grayscale group-hover:grayscale-0 transition-[filter] duration-700"
         />
 
-        {/* Dynamic vignette overlay */}
-        <motion.div 
-          style={{ opacity: useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 0.3, 0.6]) }}
-          className="absolute inset-0 bg-black/40 z-10 pointer-events-none group-hover:bg-black/0 transition-colors duration-500" 
-        />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all duration-500 z-10" />
 
         {/* Index stamp */}
         <div className="absolute top-3 left-3 z-20 font-black text-white/40 text-6xl leading-none select-none pointer-events-none">
