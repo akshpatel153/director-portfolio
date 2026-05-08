@@ -70,7 +70,7 @@ function ParallaxPhoto({ photo, config, index, onClick }: {
   );
 }
 
-function FillerWithParallax() {
+function FillerWithParallax({ text }: { text?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ 
     target: ref, 
@@ -79,8 +79,20 @@ function FillerWithParallax() {
   const y = useTransform(scrollYProgress, [0, 1], ['-60px', '60px']);
 
   return (
-    <div ref={ref} className="md:col-span-1 border-4 border-black bg-black overflow-hidden relative min-h-[300px] flex items-center justify-center">
-      <motion.div style={{ y }} className="w-full h-full flex items-center justify-center">
+    <div ref={ref} className="md:col-span-1 border-4 border-black bg-black overflow-hidden relative min-h-[300px] flex items-center justify-center group">
+      {/* Background Text */}
+      {text && (
+        <motion.div 
+          style={{ y: useTransform(scrollYProgress, [0, 1], ['20px', '-20px']) }}
+          className="absolute inset-0 flex items-center justify-center opacity-[0.05] pointer-events-none"
+        >
+          <span className="text-8xl font-black uppercase tracking-tighter whitespace-nowrap">
+            {text}
+          </span>
+        </motion.div>
+      )}
+
+      <motion.div style={{ y }} className="w-full h-full flex items-center justify-center z-10">
         <GlitchLogo />
       </motion.div>
     </div>
@@ -134,8 +146,15 @@ export function PhotographyGrid({ featured = false }: { featured?: boolean }) {
       </div>
 
       {/* Asymmetric brutalist grid */}
-      <div className="px-6 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-1 border-4 border-black bg-black">
+      <div className="px-6 md:px-12 relative">
+        {/* Background Watermark peeking through gaps */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none select-none overflow-hidden">
+          <span className="text-[25vw] font-black uppercase tracking-tighter rotate-[-10deg]">
+            DIRECTORE
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-1 border-4 border-black bg-black relative z-10">
           {displayPhotos.map((photo, i) => (
             <ParallaxPhoto 
               key={i} 
@@ -146,10 +165,16 @@ export function PhotographyGrid({ featured = false }: { featured?: boolean }) {
             />
           ))}
           
-          {/* Animated Fillers with subtle depth */}
-          {!featured && fillers.map((_, i) => (
-            <FillerWithParallax key={`filler-${i}`} />
-          ))}
+          {/* Animated Fillers with subtle depth and text */}
+          {!featured && fillers.map((_, i) => {
+            const fillerTexts = ["GRIT", "RAW", "SHARP", "CUT"];
+            return (
+              <FillerWithParallax 
+                key={`filler-${i}`} 
+                text={fillerTexts[i % fillerTexts.length]}
+              />
+            );
+          })}
         </div>
       </div>
 
