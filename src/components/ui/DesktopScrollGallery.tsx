@@ -32,8 +32,8 @@ export function DesktopScrollGallery() {
   };
 
   return (
-    <section ref={targetRef} className="relative h-[600vh] bg-[#121212] hidden md:block">
-      <div className="sticky top-[76px] h-[calc(100vh-76px)] overflow-hidden flex items-center border-y-4 border-black">
+    <section ref={targetRef} className="relative h-[600vh] bg-[#121212] hidden md:block w-full z-20 overflow-visible">
+      <div className="sticky top-[10vh] h-[80vh] overflow-hidden flex items-center border-y-4 border-black z-10 bg-black shadow-[0_0_50px_rgba(0,0,0,0.5)]">
 
         {/* Floating section title */}
         <div className="absolute top-12 left-12 z-10 pointer-events-none">

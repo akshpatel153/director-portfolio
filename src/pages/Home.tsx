@@ -13,7 +13,7 @@ import { Marquee } from '../components/ui/Marquee';
 
 export function Home() {
   return (
-    <PageTransition>
+    <>
       <Hero />
       
       {/* Philosophy Section */}
@@ -125,8 +125,6 @@ export function Home() {
             className="border-none"
           />
           <div className="absolute inset-0 bg-primary-blue mix-blend-multiply opacity-30 pointer-events-none" />
-          
-
         </div>
       </SectionWipe>
 
@@ -134,6 +132,6 @@ export function Home() {
       <SectionWipe color="bg-primary-red">
         <HomeContactCTA />
       </SectionWipe>
-    </PageTransition>
+    </>
   );
 }
