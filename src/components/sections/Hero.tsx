@@ -61,7 +61,7 @@ export function Hero() {
       </div>
 
       {/* Right side: 3D Scene */}
-      <div className="w-full lg:w-1/2 bg-background relative min-h-[50vh] lg:min-h-0 border-t-4 lg:border-t-0 border-black lg:border-none">
+      <div className="w-full lg:w-1/2 bg-background relative min-h-[50vh] lg:min-h-0 border-t-4 lg:border-t-0 border-black lg:border-none overflow-hidden">
         {/* Massive geometric background overlay */}
         <div className="absolute top-0 right-0 w-[150%] h-[150%] translate-x-1/4 -translate-y-1/4 rounded-full border-[20px] border-black/5 pointer-events-none" />
         

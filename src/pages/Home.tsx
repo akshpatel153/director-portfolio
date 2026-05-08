@@ -1,6 +1,7 @@
 import { Hero } from '../components/sections/Hero';
 import { PageTransition } from '../components/layout/PageTransition';
 import { ParallaxImage } from '../components/ui/ParallaxImage';
+import { DesktopScrollGallery } from '../components/ui/DesktopScrollGallery';
 import { HorizontalScrollGallery } from '../components/ui/HorizontalScrollGallery';
 import { SectionWipe } from '../components/ui/SectionWipe';
 import { InstagramStats } from '../components/sections/InstagramStats';
@@ -100,7 +101,8 @@ export function Home() {
         </div>
       </SectionWipe>
 
-      {/* Horizontal Scroll Gallery */}
+      {/* Gallery — Desktop: horizontal scroll, Mobile: clickable carousel */}
+      <DesktopScrollGallery />
       <HorizontalScrollGallery />
 
       {/* About Me Section */}

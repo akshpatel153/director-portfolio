@@ -1,54 +1,76 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { GALLERY_PHOTOS } from '../../data/portfolio';
 
 export function HorizontalScrollGallery() {
-  const targetRef = useRef<HTMLDivElement>(null);
+  const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(0);
+  const total = GALLERY_PHOTOS.length;
 
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-  });
+  const paginate = (dir: number) => {
+    setDirection(dir);
+    setCurrent((prev) => (prev + dir + total) % total);
+  };
 
-  // Apply a spring to the scroll progress to make it buttery smooth
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-
-  // Translate by -75% since we have 4 items
-  const x = useTransform(smoothProgress, [0, 1], ["0%", "-75%"]);
+  const variants = {
+    enter: (d: number) => ({ x: d > 0 ? '100%' : '-100%', opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (d: number) => ({ x: d > 0 ? '-100%' : '100%', opacity: 0 }),
+  };
 
   return (
-    <section ref={targetRef} className="relative h-[400vh] bg-[#121212]">
-      {/* The sticky container that locks into place beneath the Navbar */}
-      <div className="sticky top-[76px] h-[calc(100vh-76px)] overflow-hidden flex items-center border-y-4 border-black">
-        
-        {/* Floating section title */}
-        <div className="absolute top-12 left-6 md:left-12 z-10 pointer-events-none">
-          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white drop-shadow-[4px_4px_0px_black] border-l-4 border-primary-yellow bg-black/50 backdrop-blur-sm px-6 py-2">
-            Gallery
-          </h2>
+    <section className="w-full bg-[#121212] py-16 px-6 border-b-4 border-black md:hidden">
+      {/* Header */}
+      <div className="flex items-end justify-between mb-6">
+        <div>
+          <p className="font-black uppercase tracking-[0.4em] text-primary-yellow text-[10px] mb-1">— Gallery</p>
+          <h2 className="text-3xl font-black uppercase tracking-tighter text-white leading-none">Shots</h2>
+        </div>
+        <span className="font-black text-white/20 text-sm tracking-widest tabular-nums">
+          {String(current + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+        </span>
+      </div>
+
+      {/* Carousel frame */}
+      <div className="relative aspect-[4/5] w-full border-4 border-white overflow-hidden bg-black">
+        <AnimatePresence custom={direction} initial={false} mode="popLayout">
+          <motion.img
+            key={current}
+            src={GALLERY_PHOTOS[current].src}
+            alt={GALLERY_PHOTOS[current].title}
+            custom={direction}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </AnimatePresence>
+
+        {/* Index stamp */}
+        <div className="absolute top-3 left-3 z-20 font-black text-white/30 text-5xl leading-none select-none pointer-events-none">
+          {String(current + 1).padStart(2, '0')}
         </div>
 
-        {/* The moving horizontal track */}
-        <motion.div style={{ x }} className="flex h-[70vh] gap-12 px-6 md:px-12 w-[400vw]">
-          {GALLERY_PHOTOS.map((photo, index) => (
-            <div 
-              key={index} 
-              className="relative h-full w-[100vw] sm:w-[80vw] md:w-[60vw] lg:w-[40vw] shrink-0 border-4 border-white overflow-hidden group"
-            >
-              <img 
-                src={photo.src} 
-                alt={photo.title}
-                className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110"
-              />
-              <div className="absolute bottom-0 right-0 bg-primary-red text-white font-bold uppercase tracking-widest py-3 px-8 border-t-4 border-l-4 border-white">
-                {photo.title}
-              </div>
-            </div>
-          ))}
-        </motion.div>
+        {/* Bottom red bar */}
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-primary-red z-20" />
+      </div>
+
+      {/* Navigation buttons */}
+      <div className="flex gap-2 mt-4">
+        <button
+          onClick={() => paginate(-1)}
+          className="flex-1 bg-white border-2 border-black py-3 font-black uppercase tracking-widest text-xs text-black shadow-[3px_3px_0px_0px_#D02020] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all"
+        >
+          ← Prev
+        </button>
+        <button
+          onClick={() => paginate(1)}
+          className="flex-1 bg-white border-2 border-black py-3 font-black uppercase tracking-widest text-xs text-black shadow-[3px_3px_0px_0px_#1040C0] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all"
+        >
+          Next →
+        </button>
       </div>
     </section>
   );
