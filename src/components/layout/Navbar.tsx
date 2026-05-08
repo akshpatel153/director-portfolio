@@ -27,7 +27,7 @@ export function Navbar() {
               <polygon points="50,0 0,100 100,100" className="fill-primary-yellow stroke-black" strokeWidth="12" strokeLinejoin="miter" />
             </svg>
           </div>
-          <span className="font-black text-2xl tracking-tighter uppercase ml-2">Construct</span>
+          <span className="font-black text-2xl tracking-tighter uppercase ml-2">Directore</span>
         </Link>
 
         {/* Desktop nav links */}
@@ -122,7 +122,7 @@ export function Navbar() {
               <svg viewBox="0 0 100 100" className="w-4 h-4">
                 <polygon points="50,0 0,100 100,100" fill="#F0C020" />
               </svg>
-              <span className="text-white/30 font-bold uppercase tracking-[0.3em] text-[9px] ml-2">The Director</span>
+              <span className="text-white/30 font-bold uppercase tracking-[0.3em] text-[9px] ml-2">Directore</span>
             </div>
           </motion.div>
         )}

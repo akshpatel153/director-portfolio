@@ -21,7 +21,7 @@ export const PARALLAX_IMAGES = {
 };
 
 export const ABOUT_ME = {
-  title: "The Director",
+  title: "Directore",
   bio: "I am a visual architect obsessed with structure, light, and pacing. I love photography and videography, but my true passion lies in the edit—piecing together raw footage into high-impact narratives. Every frame serves a purpose. Every cut is calculated.",
   photos: [
     {
@@ -40,7 +40,7 @@ export const ABOUT_ME = {
 };
 
 export const ABOUT_PAGE_CONTENT = {
-  header: "The Director",
+  header: "Directore",
   bioParagraphs: [
     "I am a visual architect obsessed with structure, light, and pacing. Photography and videography are my mediums, but my true passion lies in the edit—piecing together raw footage into high-impact narratives.",
     "I reject the superfluous. Unnecessary transitions and soft edits are distractions. My work focuses on raw, functional composition and uncompromising visual storytelling. Every frame serves a purpose. Every cut is calculated.",

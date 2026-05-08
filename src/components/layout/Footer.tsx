@@ -28,7 +28,7 @@ export function Footer() {
             <polygon points="50,0 0,100 100,100" fill="#FFD700" stroke="white" strokeWidth="12" strokeLinejoin="miter" />
           </svg>
           <span className="font-black text-3xl tracking-tighter uppercase ml-2 leading-none">
-            The Director
+            Directore
           </span>
         </div>
 
@@ -105,7 +105,7 @@ export function Footer() {
 
       {/* Bottom bar */}
       <div className="px-6 md:px-12 py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-white/30 text-[11px] font-bold uppercase tracking-[0.2em]">
-        <span>© {new Date().getFullYear()} The Director. All rights reserved.</span>
+        <span>© {new Date().getFullYear()} Directore. All rights reserved.</span>
         <div className="flex items-center gap-4">
           <div className="w-3 h-3 rounded-full bg-primary-red" />
           <div className="w-3 h-3 bg-primary-blue" />

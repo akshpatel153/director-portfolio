@@ -127,7 +127,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
         {/* Director title + progress */}
         <div className="flex items-end justify-between mb-6">
           <h1 className="font-black text-4xl md:text-6xl tracking-tighter text-white uppercase leading-none">
-            The<br/>Director
+            Directore
           </h1>
           <span className="font-black text-5xl md:text-7xl text-white/20 tracking-tighter tabular-nums leading-none">
             {progress}%

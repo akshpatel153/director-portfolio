@@ -20,9 +20,10 @@ export function Contact() {
             </p>
             
             <div className="space-y-4 font-bold uppercase tracking-widest text-sm">
-              <p className="border-b-2 border-black pb-2">Email: <span className="text-primary-red">hello@example.com</span></p>
-              <p className="border-b-2 border-black pb-2">Twitter: <span className="text-primary-blue">@construct</span></p>
-              <p className="border-b-2 border-black pb-2">Location: <span className="text-primary-yellow">Global</span></p>
+              <p className="border-b-2 border-black pb-2">Email: <span className="text-primary-red">patelaksh1503@gmail.com</span></p>
+              <p className="border-b-2 border-black pb-2">Instagram: <a href="https://www.instagram.com/aksh.ae_" target="_blank" rel="noopener noreferrer" className="text-primary-blue hover:underline">@aksh.ae_</a></p>
+              <p className="border-b-2 border-black pb-2">YouTube: <a href="https://www.youtube.com/@HimymBeats/featured" target="_blank" rel="noopener noreferrer" className="text-primary-yellow hover:underline">@HimymBeats</a></p>
+              <p className="border-b-2 border-black pb-2">LinkedIn: <a href="https://www.linkedin.com/in/aksh-patel-cs/" target="_blank" rel="noopener noreferrer" className="text-primary-blue hover:underline">Aksh Patel</a></p>
             </div>
           </div>
 

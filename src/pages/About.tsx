@@ -77,7 +77,7 @@ export function About() {
                     {ABOUT_PAGE_CONTENT.gear.map((category, idx) => (
                       <div key={idx}>
                         <h4 className="text-xl font-bold uppercase text-primary-yellow mb-4">
-                          // {category.category}
+                          {category.category}
                         </h4>
                         <div className="flex flex-wrap gap-4">
                           {category.items.map((item, itemIdx) => (

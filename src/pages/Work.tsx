@@ -21,7 +21,7 @@ export function Work() {
 
             {/* Main message */}
             <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-tight mb-8 text-white">
-              The Director is currently locked in the editing room.
+              Directore is currently locked in the editing room.
             </h1>
 
             {/* Divider */}
