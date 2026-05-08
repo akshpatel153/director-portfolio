@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { GALLERY_PHOTOS } from '../../data/portfolio';
 import { Lightbox } from '../ui/Lightbox';
@@ -69,26 +69,43 @@ function ParallaxPhoto({ photo, config, index, onClick }: {
   );
 }
 
-function FillerWithParallax({ text }: { text?: string }) {
+function FillerWithParallax() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ 
     target: ref, 
     offset: ['start end', 'end start'] 
   });
+  
+  const words = ["GRIT", "RAW", "SHARP", "CUT", "MOTION", "FRAME"];
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % words.length);
+    }, 150); // super fast cycle
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div ref={ref} className="md:col-span-1 border-4 border-black bg-black overflow-hidden relative min-h-[300px] flex items-center justify-center group">
-      {/* Background Text */}
-      {text && (
-        <motion.div 
-          style={{ y: useTransform(scrollYProgress, [0, 1], ['20px', '-20px']) }}
-          className="absolute inset-0 flex items-center justify-center opacity-[0.1] pointer-events-none"
-        >
-          <span className="text-8xl font-black uppercase tracking-tighter whitespace-nowrap">
-            {text}
-          </span>
-        </motion.div>
-      )}
+      {/* Background Text Cycling with Blur Transition */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={index}
+            initial={{ x: 20, opacity: 0, filter: 'blur(10px)' }}
+            animate={{ x: 0, opacity: 0.15, filter: 'blur(0px)' }}
+            exit={{ x: -20, opacity: 0, filter: 'blur(10px)' }}
+            transition={{ duration: 0.1, ease: "easeOut" }}
+            style={{ y: useTransform(scrollYProgress, [0, 1], ['20px', '-20px']) }}
+            className="flex items-center justify-center"
+          >
+            <span className="text-8xl font-black uppercase tracking-tighter whitespace-nowrap">
+              {words[index]}
+            </span>
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </div>
   );
 }
@@ -159,16 +176,10 @@ export function PhotographyGrid({ featured = false }: { featured?: boolean }) {
             />
           ))}
           
-          {/* Animated Fillers with subtle depth and text */}
-          {!featured && fillers.map((_, i) => {
-            const fillerTexts = ["GRIT", "RAW", "SHARP", "CUT"];
-            return (
-              <FillerWithParallax 
-                key={`filler-${i}`} 
-                text={fillerTexts[i % fillerTexts.length]}
-              />
-            );
-          })}
+          {/* Animated Fillers with subtle depth and fast text cycling */}
+          {!featured && fillers.map((_, i) => (
+            <FillerWithParallax key={`filler-${i}`} />
+          ))}
         </div>
       </div>
 
