@@ -1,4 +1,5 @@
 
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { Navbar } from './components/layout/Navbar';
@@ -10,6 +11,10 @@ import { Photography } from './pages/Photography';
 import { Contact } from './pages/Contact';
 
 import { About } from './pages/About';
+
+import { StickyOverlay } from './components/ui/StickyOverlay';
+import { AudioPlayer } from './components/ui/AudioPlayer';
+import { Preloader } from './components/ui/Preloader';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -27,13 +32,16 @@ function AnimatedRoutes() {
   );
 }
 
-import { StickyOverlay } from './components/ui/StickyOverlay';
-import { AudioPlayer } from './components/ui/AudioPlayer';
-
-
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
     <Router>
+      {/* Preloader overlay */}
+      <AnimatePresence>
+        {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
+      </AnimatePresence>
+
       <div className="min-h-screen flex flex-col bg-background selection:bg-primary-red selection:text-white relative">
         <Navbar />
         <main className="flex-grow">
