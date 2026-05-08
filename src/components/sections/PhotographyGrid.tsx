@@ -22,8 +22,14 @@ function ParallaxPhoto({ photo, config, index, onClick }: {
   onClick: () => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const y = useTransform(scrollYProgress, [0, 1], ['-8%', '8%']);
+  const { scrollYProgress } = useScroll({ 
+    target: ref, 
+    offset: ['start end', 'end start'] 
+  });
+  
+  // More pronounced parallax movement
+  const y = useTransform(scrollYProgress, [0, 1], ['-15%', '15%']);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.15, 1, 1.15]);
 
   return (
     <motion.div
@@ -33,19 +39,22 @@ function ParallaxPhoto({ photo, config, index, onClick }: {
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.5, delay: index * 0.08, ease: 'circOut' }}
+      transition={{ duration: 0.8, delay: index * 0.05, ease: 'circOut' }}
     >
-      <div className={`${config.aspect} w-full relative overflow-hidden`}>
-        {/* Parallax image */}
+      <div className={`${config.aspect} w-full relative overflow-hidden bg-black`}>
+        {/* Parallax image with depth */}
         <motion.img
-          style={{ y }}
+          style={{ y, scale }}
           src={photo.src}
           alt={photo.title}
-          className="absolute inset-0 w-full h-[120%] -top-[10%] object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+          className="absolute inset-0 w-full h-[130%] -top-[15%] object-cover grayscale group-hover:grayscale-0 transition-[filter] duration-700"
         />
 
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all duration-500 z-10" />
+        {/* Dynamic vignette overlay */}
+        <motion.div 
+          style={{ opacity: useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 0.3, 0.6]) }}
+          className="absolute inset-0 bg-black/40 z-10 pointer-events-none group-hover:bg-black/0 transition-colors duration-500" 
+        />
 
         {/* Index stamp */}
         <div className="absolute top-3 left-3 z-20 font-black text-white/40 text-6xl leading-none select-none pointer-events-none">
@@ -65,6 +74,23 @@ function ParallaxPhoto({ photo, config, index, onClick }: {
   );
 }
 
+function FillerWithParallax() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ 
+    target: ref, 
+    offset: ['start end', 'end start'] 
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ['-30px', '30px']);
+
+  return (
+    <div ref={ref} className="md:col-span-1 border-4 border-black bg-black overflow-hidden relative min-h-[300px] flex items-center justify-center">
+      <motion.div style={{ y }} className="w-full h-full flex items-center justify-center">
+        <GlitchLogo />
+      </motion.div>
+    </div>
+  );
+}
+
 export function PhotographyGrid({ featured = false }: { featured?: boolean }) {
   const displayPhotos = featured ? GALLERY_PHOTOS.slice(0, 6) : GALLERY_PHOTOS;
   const [lightbox, setLightbox] = useState<{ isOpen: boolean; image: string | null; title: string | null }>({
@@ -78,7 +104,6 @@ export function PhotographyGrid({ featured = false }: { featured?: boolean }) {
   };
 
   // Calculate filler slots for the archive page
-  // We want to fill the 3-column grid
   const fillerCount = featured ? 0 : (3 - (displayPhotos.length % 3)) % 3;
   const fillers = Array.from({ length: fillerCount });
 
@@ -125,15 +150,10 @@ export function PhotographyGrid({ featured = false }: { featured?: boolean }) {
             />
           ))}
           
-          {/* Animated Fillers */}
+          {/* Animated Fillers with subtle depth */}
           {!featured && fillers.map((_, i) => (
-            <div key={`filler-${i}`} className="md:col-span-1">
-              <GlitchLogo />
-            </div>
+            <FillerWithParallax key={`filler-${i}`} />
           ))}
-
-          {/* Add a mandatory filler if featured for aesthetics if needed, 
-              but usually featured is a fixed 6 which divides by 3 perfectly. */}
         </div>
       </div>
 
