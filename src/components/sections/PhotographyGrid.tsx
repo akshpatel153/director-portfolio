@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { GALLERY_PHOTOS } from '../../data/portfolio';
 import { Lightbox } from '../ui/Lightbox';
+import { GlitchLogo } from '../ui/GlitchLogo';
 
 // Asymmetric brutalist grid config: [col-span, row-span, aspect]
 const GRID_CONFIG = [
@@ -76,6 +77,11 @@ export function PhotographyGrid({ featured = false }: { featured?: boolean }) {
     setLightbox({ isOpen: true, image, title });
   };
 
+  // Calculate filler slots for the archive page
+  // We want to fill the 3-column grid
+  const fillerCount = featured ? 0 : (3 - (displayPhotos.length % 3)) % 3;
+  const fillers = Array.from({ length: fillerCount });
+
   return (
     <section className={`w-full ${featured ? 'bg-black' : 'bg-[#121212]'} text-white py-24 border-b-8 border-black`} id="photography">
 
@@ -118,6 +124,16 @@ export function PhotographyGrid({ featured = false }: { featured?: boolean }) {
               onClick={() => openLightbox(photo.src, photo.title)}
             />
           ))}
+          
+          {/* Animated Fillers */}
+          {!featured && fillers.map((_, i) => (
+            <div key={`filler-${i}`} className="md:col-span-1">
+              <GlitchLogo />
+            </div>
+          ))}
+
+          {/* Add a mandatory filler if featured for aesthetics if needed, 
+              but usually featured is a fixed 6 which divides by 3 perfectly. */}
         </div>
       </div>
 
