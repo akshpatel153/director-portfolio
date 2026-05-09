@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { GALLERY_PHOTOS } from '../../data/portfolio';
 
 export function EditTimeline() {
