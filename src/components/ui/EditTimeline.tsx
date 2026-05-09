@@ -51,8 +51,7 @@ export function EditTimeline() {
             }}
             exit={{ opacity: 0, scale: 0.8, rotate: 5 }}
             transition={{ type: "spring", stiffness: 400, damping: 25, mass: 0.5 }}
-            className="fixed pointer-events-none z-50 w-48 h-32 border-4 border-white bg-black overflow-hidden shadow-[10px_10px_0px_0px_rgba(208,32,32,1)]"
-            style={{ position: 'absolute' }}
+            className="absolute pointer-events-none z-[100] w-48 h-32 border-4 border-white bg-black overflow-hidden shadow-[10px_10px_0px_0px_rgba(208,32,32,1)]"
           >
             {/* Glitch Overlay Effect */}
             <motion.div 
