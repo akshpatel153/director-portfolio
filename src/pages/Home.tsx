@@ -35,13 +35,13 @@ export function Home() {
                   {/* Hover Flood Color */}
                   <div className={`absolute inset-0 ${item.color} translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.76, 0, 0.24, 1]`} />
                   
-                  <div className={`relative z-10 p-8 md:p-12 h-full flex flex-col ${item.align} min-h-[400px] md:min-h-[550px]`}>
-                    <div className="absolute top-8 left-8 right-8 flex justify-between items-start pointer-events-none">
-                      <span className="text-4xl md:text-6xl font-black tracking-tighter opacity-10 group-hover:opacity-100 group-hover:text-black transition-all">
+                  <div className={`relative z-10 p-6 md:p-12 h-full flex flex-col ${item.align} min-h-[320px] md:min-h-[550px]`}>
+                    <div className="absolute top-6 left-6 right-6 flex justify-between items-start pointer-events-none">
+                      <span className="text-3xl md:text-6xl font-black tracking-tighter opacity-10 group-hover:opacity-100 group-hover:text-black transition-all">
                         {item.num}
                       </span>
                       {/* Viewfinder crosshair */}
-                      <div className="w-8 h-8 relative opacity-20 group-hover:opacity-100 group-hover:text-black transition-all">
+                      <div className="w-6 h-6 md:w-8 md:h-8 relative opacity-20 group-hover:opacity-100 group-hover:text-black transition-all">
                         <div className="absolute top-0 left-0 w-full h-[2px] bg-current" />
                         <div className="absolute top-0 left-0 w-[2px] h-full bg-current" />
                         <div className="absolute bottom-0 right-0 w-full h-[2px] bg-current" />
@@ -49,21 +49,21 @@ export function Home() {
                       </div>
                     </div>
 
-                    <div className={`flex flex-col ${item.align === 'justify-center' ? 'items-center text-center' : ''} ${item.align === 'justify-start' ? 'pt-16 md:pt-20' : ''} ${item.align === 'justify-end' ? 'pb-8' : ''}`}>
+                    <div className={`flex flex-col ${item.align === 'justify-center' ? 'items-center text-center' : ''} ${item.align === 'justify-start' ? 'pt-16 md:pt-20' : ''} ${item.align === 'justify-end' ? 'pb-4 md:pb-8' : ''}`}>
                       {/* Top Description (for CUT and CAPTURE) */}
                       {(item.descTop || item.doubleDesc) && (
-                        <p className="text-[10px] md:text-xs font-bold leading-relaxed uppercase tracking-wider opacity-0 group-hover:opacity-100 text-black transition-all duration-500 transform -translate-y-4 group-hover:translate-y-0 max-w-xs mb-8">
+                        <p className="text-[9px] md:text-xs font-bold leading-relaxed uppercase tracking-wider opacity-0 group-hover:opacity-100 text-black transition-all duration-500 transform -translate-y-4 group-hover:translate-y-0 max-w-xs mb-4 md:mb-8">
                           {item.desc}
                         </p>
                       )}
 
-                      <h3 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none group-hover:text-black transition-colors">
+                      <h3 className="text-4xl md:text-7xl font-black uppercase tracking-tighter leading-none group-hover:text-black transition-colors">
                         {item.word}
                       </h3>
 
                       {/* Bottom Description (for MOTION and CAPTURE) */}
                       {(!item.descTop || item.doubleDesc) && (
-                        <p className="text-[10px] md:text-xs font-bold leading-relaxed uppercase tracking-wider opacity-0 group-hover:opacity-100 text-black transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 max-w-xs mt-8">
+                        <p className="text-[9px] md:text-xs font-bold leading-relaxed uppercase tracking-wider opacity-0 group-hover:opacity-100 text-black transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 max-w-xs mt-4 md:mt-8">
                           {item.desc}
                         </p>
                       )}

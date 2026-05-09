@@ -32,7 +32,7 @@ export function DesktopScrollGallery() {
   };
 
   return (
-    <section ref={targetRef} className="relative h-[600vh] bg-[#121212] hidden md:block w-full z-20 overflow-visible">
+    <section ref={targetRef} className="relative h-[450vh] bg-[#121212] hidden md:block w-full z-20 overflow-visible">
       <div className="sticky top-[10vh] h-[80vh] overflow-hidden flex items-center border-y-4 border-black z-10 bg-black shadow-[0_0_50px_rgba(0,0,0,0.5)]">
 
         {/* Floating section title */}
@@ -44,7 +44,7 @@ export function DesktopScrollGallery() {
 
         {/* The moving horizontal track */}
         <motion.div 
-          style={{ x }} 
+          style={{ x, willChange: "transform" }} 
           className="flex h-[70vh] gap-[3vw] px-12"
         >
           {GALLERY_PHOTOS.map((photo, index) => (
@@ -56,6 +56,8 @@ export function DesktopScrollGallery() {
               <img
                 src={photo.src}
                 alt={photo.title}
+                decoding="async"
+                loading="lazy"
                 className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110"
               />
               <div className="absolute bottom-0 right-0 bg-primary-red text-white font-bold uppercase tracking-widest py-3 px-8 border-t-4 border-l-4 border-white">
