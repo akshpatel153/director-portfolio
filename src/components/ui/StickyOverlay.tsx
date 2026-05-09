@@ -40,7 +40,7 @@ export function StickyOverlay() {
   }, [displayedText, isTyping, messageIndex]);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex items-end justify-end pointer-events-none">
+    <div className="fixed bottom-6 right-6 z-50 flex items-end justify-end pointer-events-none pb-safe">
       <Link 
         to="/contact" 
         className="pointer-events-auto group relative flex items-center bg-white border-[2px] border-black px-3 py-2 rounded-t-2xl rounded-bl-2xl rounded-br-sm shadow-[3px_3px_0px_0px_#D02020] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-200"

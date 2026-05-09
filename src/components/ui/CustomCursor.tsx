@@ -4,6 +4,7 @@ import { motion, useSpring, useMotionValue, AnimatePresence } from 'framer-motio
 export function CustomCursor() {
   const [cursorType, setCursorType] = useState<'default' | 'pointer' | 'zoom' | 'zoom-out'>('default');
   const [isVisible, setIsVisible] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   // Mouse position
   const mouseX = useMotionValue(0);
@@ -15,6 +16,11 @@ export function CustomCursor() {
   const cursorY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
+    // Detect touch device
+    const touch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    setIsTouchDevice(touch);
+    if (touch) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -85,6 +91,8 @@ export function CustomCursor() {
   };
 
   const currentVariant = variants[cursorType];
+
+  if (isTouchDevice) return null;
 
   return (
     <AnimatePresence>

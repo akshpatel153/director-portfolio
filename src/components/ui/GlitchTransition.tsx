@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -6,17 +6,28 @@ export function GlitchTransition() {
   const location = useLocation();
   const [isGlitching, setIsGlitching] = useState(false);
 
-  useEffect(() => {
-    setIsGlitching(true);
-    
-    const endTimer = setTimeout(() => {
-      setIsGlitching(false);
-    }, 500); // slightly longer to ensure full animation cycle
+  const isFirstMount = useRef(true);
+  const prevPathname = useRef(location.pathname);
 
-    return () => {
-      clearTimeout(endTimer);
-    };
-  }, [location.pathname]); // Trigger on every pathname change
+  useEffect(() => {
+    // Skip glitch on refresh/initial load
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      return;
+    }
+
+    // Only glitch if the pathname actually changed (not just search params)
+    if (location.pathname !== prevPathname.current) {
+      setIsGlitching(true);
+      prevPathname.current = location.pathname;
+      
+      const endTimer = setTimeout(() => {
+        setIsGlitching(false);
+      }, 500);
+
+      return () => clearTimeout(endTimer);
+    }
+  }, [location.pathname]);
 
   return (
     <AnimatePresence>
