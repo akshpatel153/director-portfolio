@@ -71,11 +71,7 @@ export const GALLERY_PHOTOS = [
   { src: "/images/optimized/Image-16.webp", title: "Gallery 10" },
   { src: "/images/optimized/Image-re-1.webp", title: "Gallery 11" },
   { src: "/images/optimized/Image-re-2.webp", title: "Gallery 12" },
-  { src: "/images/optimized/Image-re-3.webp", title: "Gallery 13" },
-  { src: "/images/optimized/Image-re-5.webp", title: "Gallery 14" },
-  { src: "/images/optimized/Image-ree-1.webp", title: "Gallery 15" },
-  { src: "/images/optimized/Image-ree-2.webp", title: "Gallery 16" },
-  { src: "/images/optimized/Image-ree-3.webp", title: "Gallery 17" }
+  { src: "/images/optimized/Image-re-3.webp", title: "Gallery 13" }
 ];
 
 export const PROJECTS = [
