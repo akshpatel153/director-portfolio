@@ -66,12 +66,12 @@ export function Home() {
             {/* Bottom technical strip */}
             <div className="w-full bg-black text-white py-4 px-6 md:px-12 flex justify-between items-center text-[10px] font-black uppercase tracking-[0.4em]">
               <div className="flex gap-8">
-                <span>ISO 100</span>
-                <span>F/2.8</span>
-                <span>1/50 SEC</span>
+                <span>REC ●</span>
+                <span>24 FPS</span>
+                <span>4K PRORES</span>
               </div>
               <div className="hidden md:block">
-                UNCOMPROMISING VISUAL ARCHITECTURE // {new Date().getFullYear()}
+                HIGH-IMPACT VISUAL PRODUCTION // {new Date().getFullYear()}
               </div>
             </div>
           </div>
