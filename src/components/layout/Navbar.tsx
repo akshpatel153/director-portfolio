@@ -100,7 +100,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 top-full z-40 bg-black flex flex-col md:hidden"
+            className="fixed inset-0 top-[72px] z-40 bg-black flex flex-col md:hidden"
           >
             <div className="flex flex-col py-8 px-6 gap-2 flex-grow">
               {NAV_LINKS.map((link, i) => {
