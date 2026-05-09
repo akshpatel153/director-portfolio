@@ -34,12 +34,12 @@ export function Home() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.7, ease: "easeOut" }}
             >
-              <h2 className="text-4xl sm:text-6xl md:text-[8.5rem] font-black uppercase tracking-tighter leading-none text-center flex flex-col items-center -space-y-1 md:-space-y-4">
+              <h2 className="text-4xl sm:text-6xl md:text-[8rem] font-black uppercase tracking-tighter leading-none text-center flex flex-col items-center space-y-4 md:space-y-8">
                 {PHILOSOPHY_CONTENT.title.split('\n').map((line, i) => {
                   // Map the 3 lines to solid brutalist background blocks
                   const bgColors = ['bg-primary-red', 'bg-primary-blue', 'bg-primary-yellow'];
-                  const rotations = ['-rotate-2', 'rotate-1', '-rotate-1'];
-                  const margins = ['ml-0', 'ml-6 md:ml-16', '-ml-4 md:-ml-8'];
+                  const rotations = ['-rotate-6', 'rotate-3', '-rotate-4'];
+                  const margins = ['ml-0', 'ml-12 md:ml-32', '-ml-8 md:-ml-16'];
                   const bgClass = bgColors[i % bgColors.length];
                   
                   return (
@@ -48,7 +48,7 @@ export function Home() {
                       className={`relative z-${40 - i * 10} ${rotations[i]} ${margins[i]} group`}
                     >
                       <span 
-                        className={`block text-black ${bgClass} border-[3px] md:border-[6px] border-black shadow-[6px_6px_0px_0px_#000] md:shadow-[12px_12px_0px_0px_#000] px-5 md:px-14 py-2 md:py-6 group-hover:-translate-y-2 group-hover:-translate-x-2 group-hover:shadow-[16px_16px_0px_0px_#000] transition-all duration-300`}
+                        className={`block text-black ${bgClass} border-[3px] md:border-[6px] border-black shadow-[8px_8px_0px_0px_#000] md:shadow-[14px_14px_0px_0px_#000] px-6 md:px-16 py-3 md:py-8 group-hover:-translate-y-2 group-hover:-translate-x-2 group-hover:shadow-[20px_20px_0px_0px_#000] transition-all duration-300`}
                       >
                         {line}
                       </span>
