@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence, useTransform } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const TRACKS = [
   { src: "/Music/Feel It (From “Invincible”)_spotdown.org.mp3", label: "FEEL IT — D4VD" },
