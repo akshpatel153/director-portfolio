@@ -4,15 +4,15 @@
 // ==========================================
 
 export const HERO_CONTENT = {
-  titleLine1: "Photos",
-  titleLine2: "& Motion",
-  description: "I capture the world through brutalist geometry and motion. Photographer, Videographer, & Video Editor."
+  titleLine1: "Shoot",
+  titleLine2: "& Cut",
+  description: "I'm a director and editor focused on high-impact visuals. I don't just capture footage—I build stories that hit hard and stay with you."
 };
 
 export const PHILOSOPHY_CONTENT = {
   title: "Motion \n Capture \n Cut",
-  paragraph1: "I reject the superfluous. Unnecessary transitions and soft edits are distractions. My work focuses on raw, functional composition and uncompromising visual storytelling.",
-  paragraph2: "Whether it's framing the perfect still, shooting dynamic videography, or cutting together a heavy, impactful sequence, the goal is absolute clarity."
+  paragraph1: "Good work isn't about the gear; it's about the gut. I focus on raw composition and the kind of pacing that keeps people from looking away.",
+  paragraph2: "Whether it's a 15-second commercial or a full-length feature, every frame needs a reason to exist. If it doesn't add to the story, it's gone."
 };
 
 export const PARALLAX_IMAGES = {
@@ -21,34 +21,34 @@ export const PARALLAX_IMAGES = {
 };
 
 export const ABOUT_ME = {
-  title: "Directore",
-  bio: "I am a visual director obsessed with structure, light, and pacing. I love photography and videography, but my true passion lies in the edit—piecing together raw footage into high-impact narratives. Every frame serves a purpose. Every cut is calculated.",
+  title: "The Director",
+  bio: "I'm obsessed with the technical side of the craft—the lighting, the lenses, the frame rates—but I care more about the reaction. I've spent years learning how to piece together raw visuals into narratives that actually mean something. I don't do 'soft' edits. I do work that demands attention.",
   photos: [
     {
       url: "/images/optimized/Image-ree-2.webp",
-      hoverText: "It's me!"
+      hoverText: "On Set"
     },
     {
       url: "https://images.unsplash.com/photo-1551373884-8a0750074df7?auto=format&fit=crop&q=80&w=800",
-      hoverText: "Behind the lens"
+      hoverText: "The Kit"
     },
     {
       url: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&q=80&w=800",
-      hoverText: "In the edit"
+      hoverText: "The Edit"
     }
   ]
 };
 
 export const ABOUT_PAGE_CONTENT = {
-  header: "Directore",
+  header: "The Director",
   bioParagraphs: [
-    "I am a visual storyteller obsessed with structure, light, and pacing. Photography and videography are my mediums, but my true passion lies in the edit—piecing together raw footage into high-impact narratives.",
-    "I reject the superfluous. Unnecessary transitions and soft edits are distractions. My work focuses on raw, functional composition and uncompromising visual storytelling. Every frame serves a purpose. Every cut is calculated.",
-    "From framing the perfect still to shooting dynamic videography and cutting together a heavy, impactful sequence, my goal is absolute clarity. Brutal. Direct. Unapologetic."
+    "I started with a camera and a laptop, obsessed with why some shots feel like art and others just feel like footage. That obsession turned into a career in directing and editing.",
+    "My style is built on structure and contrast. I like my visuals sharp and my cuts even sharper. I believe that a great edit is invisible until it hits you all at once.",
+    "From high-energy commercial work to moody architectural photography, the goal is always the same: absolute clarity. No filler, no wasted frames, just pure visual impact."
   ],
   gear: [
-    { category: "Cameras", items: ["Coming Soon"] },
-    { category: "Lenses", items: ["Coming Soon"] },
+    { category: "Cameras", items: ["Sony FX Series", "Blackmagic Design"] },
+    { category: "Lenses", items: ["Vintage Primes", "G-Master Series"] },
     { category: "Software", items: ["Premiere Pro", "After Effects", "DaVinci Resolve", "Lightroom"] }
   ],
   photos: [
@@ -59,54 +59,54 @@ export const ABOUT_PAGE_CONTENT = {
 };
 
 export const GALLERY_PHOTOS = [
-  { src: "/images/optimized/Image-1.webp", title: "Gallery 1" },
-  { src: "/images/optimized/Image-2.webp", title: "Gallery 2" },
-  { src: "/images/optimized/Image-3.webp", title: "Gallery 3" },
-  { src: "/images/optimized/Image-4.webp", title: "Gallery 4" },
-  { src: "/images/optimized/Image-7.webp", title: "Gallery 5" },
-  { src: "/images/optimized/Image-9.webp", title: "Gallery 6" },
-  { src: "/images/optimized/Image-13.webp", title: "Gallery 7" },
-  { src: "/images/optimized/Image-14.webp", title: "Gallery 8" },
-  { src: "/images/optimized/Image-15.webp", title: "Gallery 9" },
-  { src: "/images/optimized/Image-16.webp", title: "Gallery 10" },
-  { src: "/images/optimized/Image-re-1.webp", title: "Gallery 11" },
-  { src: "/images/optimized/Image-re-2.webp", title: "Gallery 12" },
-  { src: "/images/optimized/Image-re-3.webp", title: "Gallery 13" }
+  { src: "/images/optimized/Image-1.webp", title: "Visual 01" },
+  { src: "/images/optimized/Image-2.webp", title: "Visual 02" },
+  { src: "/images/optimized/Image-3.webp", title: "Visual 03" },
+  { src: "/images/optimized/Image-4.webp", title: "Visual 04" },
+  { src: "/images/optimized/Image-7.webp", title: "Visual 05" },
+  { src: "/images/optimized/Image-9.webp", title: "Visual 06" },
+  { src: "/images/optimized/Image-13.webp", title: "Visual 07" },
+  { src: "/images/optimized/Image-14.webp", title: "Visual 08" },
+  { src: "/images/optimized/Image-15.webp", title: "Visual 09" },
+  { src: "/images/optimized/Image-16.webp", title: "Visual 10" },
+  { src: "/images/optimized/Image-re-1.webp", title: "Visual 11" },
+  { src: "/images/optimized/Image-re-2.webp", title: "Visual 12" },
+  { src: "/images/optimized/Image-re-3.webp", title: "Visual 13" }
 ];
 
 export const PROJECTS = [
   {
-    title: "Nike Commercial Cut",
-    role: "Video Editor",
-    description: "Fast-paced, brutalist edit for a high-energy athletic campaign. Focused on sharp cuts and heavy sound design.",
-    tags: ["Premiere Pro", "After Effects", "Color Grading"],
+    title: "The Run",
+    role: "Lead Editor",
+    description: "A fast-paced commercial project where the sound design drove the visuals. I focused on aggressive pacing and heavy color grading to match the energy.",
+    tags: ["Premiere Pro", "Sound Design", "Color"],
     color: "bg-primary-red",
     decorationColor: "red" as const,
     shape: "circle" as const,
   },
   {
-    title: "Urban Exploration Series",
+    title: "Concrete Jungle",
     role: "Cinematographer",
-    description: "A raw, high-contrast video series documenting brutalist architecture across Eastern Europe. Shot entirely on vintage lenses.",
-    tags: ["Sony FX3", "Cinematography", "Davinci Resolve"],
+    description: "Documenting brutalist structures across the city. I used vintage glass to get a raw, textured feel that modern lenses just can't replicate.",
+    tags: ["Sony FX3", "Vintage Lenses", "DaVinci"],
     color: "bg-primary-blue",
     decorationColor: "blue" as const,
     shape: "square" as const,
   },
   {
-    title: "Neon Nights",
+    title: "Night Shift",
     role: "Photographer",
-    description: "A photographic study of cyber-punk aesthetics and harsh neon lighting in Tokyo. Zero soft gradients, pure contrast.",
-    tags: ["Photography", "Lightroom", "Night Shoot"],
+    description: "A series exploring the high-contrast world of city nights. No soft gradients here—just harsh neon and deep blacks.",
+    tags: ["Photography", "Lightroom", "Night"],
     color: "bg-primary-yellow",
     decorationColor: "yellow" as const,
     shape: "triangle" as const,
   },
   {
-    title: "Vogue Fashion Film",
-    role: "Director & Editor",
-    description: "Avant-garde fashion film focusing on sharp angles, high contrast black-and-white visuals, and aggressive pacing.",
-    tags: ["Directing", "Editing", "Sound Design"],
+    title: "Vogue Edit",
+    role: "Director / Editor",
+    description: "Avant-garde fashion piece. I played with frame rates and disjointed sequences to create something that feels like a fever dream.",
+    tags: ["Directing", "Experimental", "Edit"],
     color: "bg-black",
     decorationColor: "red" as const,
     shape: "circle" as const,
@@ -152,10 +152,10 @@ export const INSTAGRAM_STATS = {
 };
 
 export const HOME_CONTACT_CTA = {
-  title: "Let's Shoot",
-  description: "Ready to capture a visual experience that defies the ordinary? Let's collaborate on your next big campaign or edit.",
-  buttonText: "Book Me",
-  resumeText: "Get my PORTFOLIO PDF",
+  title: "Let's Build It",
+  description: "Have a project that needs a specific look or a better edit? Let's talk about how we can make it hit harder.",
+  buttonText: "Get in Touch",
+  resumeText: "Download Portfolio PDF",
   resumeLink: "/portfolio.pdf"
 };
 
