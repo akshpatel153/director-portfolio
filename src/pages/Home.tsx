@@ -49,7 +49,7 @@ export function Home() {
                       </div>
                     </div>
 
-                    <div className={`flex flex-col ${item.align === 'justify-center' ? 'items-center text-center' : ''} ${item.align === 'justify-start' ? 'pt-24 md:pt-32' : ''} ${item.align === 'justify-end' ? 'pb-8' : ''}`}>
+                    <div className={`flex flex-col ${item.align === 'justify-center' ? 'items-center text-center' : ''} ${item.align === 'justify-start' ? 'pt-16 md:pt-20' : ''} ${item.align === 'justify-end' ? 'pb-8' : ''}`}>
                       {/* Top Description (for CUT and CAPTURE) */}
                       {(item.descTop || item.doubleDesc) && (
                         <p className="text-[10px] md:text-xs font-bold leading-relaxed uppercase tracking-wider opacity-0 group-hover:opacity-100 text-black transition-all duration-500 transform -translate-y-4 group-hover:translate-y-0 max-w-xs mb-8">
