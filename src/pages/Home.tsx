@@ -8,7 +8,6 @@ import { AboutMe } from '../components/sections/AboutMe';
 import { HomeContactCTA } from '../components/sections/HomeContactCTA';
 import { motion } from 'framer-motion';
 import { PHILOSOPHY_CONTENT, PARALLAX_IMAGES } from '../data/portfolio';
-import { Marquee } from '../components/ui/Marquee';
 
 export function Home() {
   return (
