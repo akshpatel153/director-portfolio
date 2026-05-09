@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
 
 export function CustomCursor() {
-  const [cursorType, setCursorType] = useState<'default' | 'pointer' | 'zoom'>('default');
+  const [cursorType, setCursorType] = useState<'default' | 'pointer' | 'zoom' | 'zoom-out'>('default');
   const [isVisible, setIsVisible] = useState(false);
 
   // Mouse position
@@ -27,8 +27,10 @@ export function CustomCursor() {
       // Determine cursor type based on target
       if (target.closest('a') || target.closest('button') || target.classList.contains('cursor-pointer')) {
         setCursorType('pointer');
-      } else if (target.classList.contains('cursor-zoom-in') || target.tagName === 'IMG') {
+      } else if (target.closest('.cursor-zoom-in') || target.tagName === 'IMG') {
         setCursorType('zoom');
+      } else if (target.closest('.cursor-zoom-out')) {
+        setCursorType('zoom-out');
       } else {
         setCursorType('default');
       }
@@ -70,6 +72,13 @@ export function CustomCursor() {
       width: 60,
       height: 60,
       backgroundColor: "#F0C020", // primary-yellow
+      borderRadius: "0px",
+      mixDifference: true
+    },
+    'zoom-out': {
+      width: 60,
+      height: 60,
+      backgroundColor: "#D02020", // primary-red
       borderRadius: "0px",
       mixDifference: true
     }
@@ -115,6 +124,16 @@ export function CustomCursor() {
                 className="text-[10px] font-black text-black uppercase"
               >
                 VIEW
+              </motion.span>
+            )}
+
+            {cursorType === 'zoom-out' && (
+              <motion.span 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-[10px] font-black text-white uppercase"
+              >
+                CLOSE
               </motion.span>
             )}
             
