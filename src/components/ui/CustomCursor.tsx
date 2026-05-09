@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
 
 export function CustomCursor() {
-  const [cursorType, setCursorType] = useState<'default' | 'pointer' | 'zoom' | 'text'>('default');
+  const [cursorType, setCursorType] = useState<'default' | 'pointer' | 'zoom'>('default');
   const [isVisible, setIsVisible] = useState(false);
 
   // Mouse position
