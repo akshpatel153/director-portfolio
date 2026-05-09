@@ -16,6 +16,7 @@ import { StickyOverlay } from './components/ui/StickyOverlay';
 import { AudioPlayer } from './components/ui/AudioPlayer';
 import { Preloader } from './components/ui/Preloader';
 import { ScrollToTop } from './components/ui/ScrollToTop';
+import { CustomCursor } from './components/ui/CustomCursor';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -39,6 +40,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
+      <CustomCursor />
       {/* Preloader overlay */}
       <AnimatePresence>
         {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}

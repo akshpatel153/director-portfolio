@@ -30,6 +30,12 @@
     scroll-behavior: smooth;
   }
   
+  @media (hover: hover) and (pointer: fine) {
+    html, body, a, button {
+      cursor: none !important;
+    }
+  }
+  
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
