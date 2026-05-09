@@ -20,9 +20,9 @@ export function Home() {
           <div className="w-full z-10 relative">
             <div className="grid grid-cols-1 md:grid-cols-3 min-h-[60vh] border-t-4 border-black">
               {[
-                { word: "MOTION", color: "bg-primary-red", num: "01", desc: PHILOSOPHY_CONTENT.paragraph1 },
-                { word: "CAPTURE", color: "bg-primary-blue", num: "02", desc: PHILOSOPHY_CONTENT.paragraph2 },
-                { word: "CUT", color: "bg-primary-yellow", num: "03", desc: "The edit is where the story is found. Every frame serves the sequence. No soft transitions. Pure impact." }
+                { word: "MOTION", color: "bg-primary-red", num: "01", desc: PHILOSOPHY_CONTENT.paragraph1, align: "justify-start" },
+                { word: "CAPTURE", color: "bg-primary-blue", num: "02", desc: PHILOSOPHY_CONTENT.paragraph2, align: "justify-center", doubleDesc: true },
+                { word: "CUT", color: "bg-primary-yellow", num: "03", desc: "The edit is where the story is found. Every frame serves the sequence. No soft transitions. Pure impact.", align: "justify-end", descTop: true }
               ].map((item, i) => (
                 <motion.div 
                   key={i}
@@ -35,8 +35,8 @@ export function Home() {
                   {/* Hover Flood Color */}
                   <div className={`absolute inset-0 ${item.color} translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.76, 0, 0.24, 1]`} />
                   
-                  <div className="relative z-10 p-8 md:p-12 h-full flex flex-col justify-between min-h-[400px]">
-                    <div className="flex justify-between items-start">
+                  <div className={`relative z-10 p-8 md:p-12 h-full flex flex-col ${item.align} min-h-[500px] md:min-h-[700px]`}>
+                    <div className="absolute top-8 left-8 right-8 flex justify-between items-start pointer-events-none">
                       <span className="text-4xl md:text-6xl font-black tracking-tighter opacity-10 group-hover:opacity-100 group-hover:text-black transition-all">
                         {item.num}
                       </span>
@@ -49,13 +49,24 @@ export function Home() {
                       </div>
                     </div>
 
-                    <div className="mt-20">
-                      <h3 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-6 group-hover:text-black transition-colors">
+                    <div className={`flex flex-col ${item.align === 'justify-center' ? 'items-center text-center' : ''}`}>
+                      {/* Top Description (for CUT and CAPTURE) */}
+                      {(item.descTop || item.doubleDesc) && (
+                        <p className="text-sm font-bold leading-relaxed uppercase tracking-wider opacity-0 group-hover:opacity-100 text-black transition-all duration-500 transform -translate-y-4 group-hover:translate-y-0 max-w-xs mb-8">
+                          {item.desc}
+                        </p>
+                      )}
+
+                      <h3 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none group-hover:text-black transition-colors">
                         {item.word}
                       </h3>
-                      <p className="text-sm md:text-base font-bold leading-relaxed uppercase tracking-wider opacity-0 group-hover:opacity-100 text-black transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 max-w-xs">
-                        {item.desc}
-                      </p>
+
+                      {/* Bottom Description (for MOTION and CAPTURE) */}
+                      {(!item.descTop || item.doubleDesc) && (
+                        <p className="text-sm font-bold leading-relaxed uppercase tracking-wider opacity-0 group-hover:opacity-100 text-black transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 max-w-xs mt-8">
+                          {item.desc}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </motion.div>
