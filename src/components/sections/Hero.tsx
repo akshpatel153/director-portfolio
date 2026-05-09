@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { HeroScene } from '../3d/HeroScene';
+import { EditTimeline } from '../ui/EditTimeline';
 import { motion } from 'framer-motion';
 import { HERO_CONTENT } from '../../data/portfolio';
 
@@ -60,18 +60,14 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Right side: 3D Scene */}
       <div className="w-full lg:w-1/2 bg-background relative min-h-[50vh] lg:min-h-0 border-t-4 lg:border-t-0 border-black lg:border-none overflow-hidden">
-        {/* Massive geometric background overlay */}
-        <div className="absolute top-0 right-0 w-full h-full rounded-full border-[20px] border-black/5 pointer-events-none -translate-y-1/2 translate-x-1/2" />
-        
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
           className="absolute inset-0"
         >
-          <HeroScene />
+          <EditTimeline />
         </motion.div>
       </div>
     </section>
