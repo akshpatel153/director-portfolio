@@ -28,49 +28,59 @@ export function GlitchTransition() {
   }, [location, displayLocation]);
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence>
       {isGlitching && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.1 }}
-          className="fixed inset-0 z-[10000] pointer-events-none overflow-hidden bg-black"
+          className="fixed inset-0 z-[10000] pointer-events-none overflow-hidden"
         >
+          {/* Black base layer that only exists during glitch */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 1, 1, 0] }}
+            transition={{ duration: 0.4, times: [0, 0.1, 0.8, 1] }}
+            className="absolute inset-0 bg-black"
+          />
+
           {/* Glitch Slices */}
-          {[...Array(5)].map((_, i) => (
+          {[...Array(8)].map((_, i) => (
             <motion.div
               key={i}
               initial={{ x: '-100%' }}
               animate={{ 
                 x: ['-100%', '0%', '100%'],
-                backgroundColor: ['#D02020', '#1040C0', '#F0C020', '#000000']
               }}
               transition={{ 
-                duration: 0.3, 
-                delay: i * 0.05,
-                ease: "easeInOut"
+                duration: 0.25, 
+                delay: i * 0.03,
+                ease: "linear"
               }}
-              className="absolute w-full h-[20%] left-0"
-              style={{ top: `${i * 20}%` }}
+              className={`absolute w-full h-[12.5%] left-0 z-10 ${
+                i % 3 === 0 ? 'bg-primary-red' : 
+                i % 3 === 1 ? 'bg-primary-blue' : 'bg-primary-yellow'
+              }`}
+              style={{ top: `${i * 12.5}%` }}
             />
           ))}
 
-          {/* Static/Noise overlay */}
+          {/* Static Noise overlay */}
           <motion.div 
             animate={{ 
-              opacity: [0, 0.4, 0.2, 0.5, 0],
-              x: [0, -20, 20, -10, 10, 0]
+              opacity: [0, 0.5, 0],
+              x: [-10, 10, -10, 10, 0]
             }}
             transition={{ duration: 0.3 }}
-            className="absolute inset-0 bg-[url('https://media.giphy.com/media/oEI9uWU7AT9vliTo4p/giphy.gif')] bg-cover opacity-20 mix-blend-screen"
+            className="absolute inset-0 bg-white/10 mix-blend-overlay z-20"
           />
 
           {/* Inversion flash */}
           <motion.div
             animate={{ opacity: [0, 1, 0] }}
-            transition={{ duration: 0.2, times: [0, 0.5, 1] }}
-            className="absolute inset-0 bg-white mix-blend-difference"
+            transition={{ duration: 0.15, times: [0, 0.5, 1] }}
+            className="absolute inset-0 bg-white mix-blend-difference z-30"
           />
         </motion.div>
       )}
