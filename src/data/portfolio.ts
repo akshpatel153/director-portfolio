@@ -71,7 +71,11 @@ export const GALLERY_PHOTOS = [
   { src: "/images/optimized/Image-16.webp", title: "Visual 10" },
   { src: "/images/optimized/Image-re-1.webp", title: "Visual 11" },
   { src: "/images/optimized/Image-re-2.webp", title: "Visual 12" },
-  { src: "/images/optimized/Image-re-3.webp", title: "Visual 13" }
+  { src: "/images/optimized/Image-re-3.webp", title: "Visual 13" },
+  { src: "/images/optimized/Image-re-5.webp", title: "Visual 14" },
+  { src: "/images/optimized/Image-ree-1.webp", title: "Visual 15" },
+  { src: "/images/optimized/Image-ree-2.webp", title: "Visual 16" },
+  { src: "/images/optimized/Image-ree-3.webp", title: "Visual 17" }
 ];
 
 export const PROJECTS = [
