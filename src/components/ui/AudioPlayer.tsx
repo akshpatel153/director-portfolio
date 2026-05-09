@@ -120,46 +120,59 @@ export function AudioPlayer() {
 
       </motion.div>
 
-      {/* Main Visualizer - Bottom Center */}
+      {/* Minimalistic String Visualizer - Bottom Center */}
       <AnimatePresence>
         {isPlaying && (
           <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 100 }}
-            className="fixed bottom-0 left-1/2 -translate-x-1/2 z-40 flex items-end gap-[1px] md:gap-1 px-2 pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed bottom-12 left-0 w-full h-12 z-40 pointer-events-none flex items-center justify-center"
           >
-            {[...Array(32)].map((_, i) => {
-              // Create a nice wave-like pattern for the bars
-              const delay = i * 0.02;
-              const duration = 0.4 + Math.random() * 0.4;
-              
-              return (
-                <motion.div
-                  key={i}
-                  animate={{ 
-                    height: [
-                      "10px", 
-                      `${20 + Math.random() * 80}px`, 
-                      "15px", 
-                      `${40 + Math.random() * 100}px`, 
-                      "10px"
-                    ] 
-                  }}
-                  transition={{ 
-                    repeat: Infinity, 
-                    duration: duration,
-                    delay: delay,
-                    ease: "easeInOut"
-                  }}
-                  className={`w-1 md:w-2 border-t-2 border-x-[1px] border-black ${
-                    i % 10 === 0 ? 'bg-primary-red' : 
-                    i % 10 === 3 ? 'bg-primary-blue' : 
-                    i % 10 === 7 ? 'bg-primary-yellow' : 'bg-black'
-                  }`}
-                />
-              );
-            })}
+            <svg width="200" height="40" viewBox="0 0 200 40" className="overflow-visible">
+              <motion.path
+                d="M 0 20 Q 50 20 100 20 Q 150 20 200 20"
+                animate={{
+                  d: [
+                    "M 0 20 Q 50 20 100 20 Q 150 20 200 20",
+                    `M 0 20 Q 50 ${10 + Math.random() * 20} 100 20 Q 150 ${10 + Math.random() * 20} 200 20`,
+                    "M 0 20 Q 50 20 100 20 Q 150 20 200 20",
+                    `M 0 20 Q 50 ${20 - Math.random() * 20} 100 20 Q 150 ${20 - Math.random() * 20} 200 20`,
+                    "M 0 20 Q 50 20 100 20 Q 150 20 200 20"
+                  ]
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 0.4,
+                  ease: "linear"
+                }}
+                stroke="black"
+                strokeWidth="1.5"
+                fill="none"
+              />
+              {/* Secondary string for depth */}
+              <motion.path
+                d="M 0 20 Q 50 20 100 20 Q 150 20 200 20"
+                animate={{
+                  d: [
+                    "M 0 20 Q 50 20 100 20 Q 150 20 200 20",
+                    `M 0 20 Q 50 ${15 + Math.random() * 10} 100 20 Q 150 ${15 + Math.random() * 10} 200 20`,
+                    "M 0 20 Q 50 20 100 20 Q 150 20 200 20",
+                    `M 0 20 Q 50 ${25 - Math.random() * 10} 100 20 Q 150 ${25 - Math.random() * 10} 200 20`,
+                    "M 0 20 Q 50 20 100 20 Q 150 20 200 20"
+                  ]
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 0.6,
+                  ease: "linear",
+                  delay: 0.1
+                }}
+                stroke="rgba(0,0,0,0.2)"
+                strokeWidth="1"
+                fill="none"
+              />
+            </svg>
           </motion.div>
         )}
       </AnimatePresence>
