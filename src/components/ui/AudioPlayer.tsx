@@ -119,6 +119,50 @@ export function AudioPlayer() {
         </AnimatePresence>
 
       </motion.div>
+
+      {/* Main Visualizer - Bottom Center */}
+      <AnimatePresence>
+        {isPlaying && (
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 100 }}
+            className="fixed bottom-0 left-1/2 -translate-x-1/2 z-40 flex items-end gap-[1px] md:gap-1 px-2 pointer-events-none"
+          >
+            {[...Array(32)].map((_, i) => {
+              // Create a nice wave-like pattern for the bars
+              const delay = i * 0.02;
+              const duration = 0.4 + Math.random() * 0.4;
+              
+              return (
+                <motion.div
+                  key={i}
+                  animate={{ 
+                    height: [
+                      "10px", 
+                      `${20 + Math.random() * 80}px`, 
+                      "15px", 
+                      `${40 + Math.random() * 100}px`, 
+                      "10px"
+                    ] 
+                  }}
+                  transition={{ 
+                    repeat: Infinity, 
+                    duration: duration,
+                    delay: delay,
+                    ease: "easeInOut"
+                  }}
+                  className={`w-1 md:w-2 border-t-2 border-x-[1px] border-black ${
+                    i % 10 === 0 ? 'bg-primary-red' : 
+                    i % 10 === 3 ? 'bg-primary-blue' : 
+                    i % 10 === 7 ? 'bg-primary-yellow' : 'bg-black'
+                  }`}
+                />
+              );
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
