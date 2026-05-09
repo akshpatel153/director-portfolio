@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
 
 export function CustomCursor() {
-  const [cursorType, setCursorType] = useState<'default' | 'pointer' | 'zoom' | 'text'>('default');
+  const [cursorType, setCursorType] = useState<'default' | 'pointer' | 'zoom'>('default');
   const [isVisible, setIsVisible] = useState(false);
 
   // Mouse position
@@ -10,7 +10,7 @@ export function CustomCursor() {
   const mouseY = useMotionValue(0);
 
   // Spring physics for smooth movement
-  const springConfig = { damping: 25, stiffness: 250, mass: 0.5 };
+  const springConfig = { damping: 30, stiffness: 300, mass: 0.5 };
   const cursorX = useSpring(mouseX, springConfig);
   const cursorY = useSpring(mouseY, springConfig);
 
@@ -24,13 +24,10 @@ export function CustomCursor() {
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       
-      // Determine cursor type based on target
       if (target.closest('a') || target.closest('button') || target.classList.contains('cursor-pointer')) {
         setCursorType('pointer');
       } else if (target.classList.contains('cursor-zoom-in') || target.tagName === 'IMG') {
         setCursorType('zoom');
-      } else if (target.tagName === 'H1' || target.tagName === 'H2' || target.tagName === 'P') {
-        setCursorType('text');
       } else {
         setCursorType('default');
       }
@@ -52,40 +49,6 @@ export function CustomCursor() {
     };
   }, [mouseX, mouseY, isVisible]);
 
-  // Cursor variants
-  const variants = {
-    default: {
-      width: 20,
-      height: 20,
-      backgroundColor: "#D02020", // primary-red
-      borderRadius: "0px",
-      mixDifference: false
-    },
-    pointer: {
-      width: 40,
-      height: 40,
-      backgroundColor: "#1040C0", // primary-blue
-      borderRadius: "50%",
-      mixDifference: true
-    },
-    zoom: {
-      width: 60,
-      height: 60,
-      backgroundColor: "#F0C020", // primary-yellow
-      borderRadius: "0px",
-      mixDifference: true
-    },
-    text: {
-      width: 8,
-      height: 40,
-      backgroundColor: "#ffffff",
-      borderRadius: "0px",
-      mixDifference: true
-    }
-  };
-
-  const currentVariant = variants[cursorType];
-
   return (
     <AnimatePresence>
       {isVisible && (
@@ -102,35 +65,48 @@ export function CustomCursor() {
             translateY: '-50%',
           }}
         >
-          <motion.div
-            animate={{
-              width: currentVariant.width,
-              height: currentVariant.height,
-              backgroundColor: currentVariant.backgroundColor,
-              borderRadius: currentVariant.borderRadius,
-            }}
-            transition={{ type: "spring", damping: 20, stiffness: 200 }}
-            style={{
-              border: '2px solid black',
-              boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
-              mixBlendMode: currentVariant.mixDifference ? 'difference' : 'normal'
-            }}
-            className="relative flex items-center justify-center overflow-hidden"
-          >
-            {cursorType === 'zoom' && (
-              <motion.span 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-[10px] font-black text-black uppercase"
-              >
+          {/* Default: Blue Square */}
+          {cursorType === 'default' && (
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.5, opacity: 0 }}
+              className="w-5 h-5 bg-primary-blue border-2 border-black shadow-[3px_3px_0px_0px_black]"
+            />
+          )}
+
+          {/* Pointer: Red Circle */}
+          {cursorType === 'pointer' && (
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1.2, opacity: 1 }}
+              exit={{ scale: 0.5, opacity: 0 }}
+              className="w-8 h-8 bg-primary-red border-2 border-black rounded-full shadow-[4px_4px_0px_0px_black] flex items-center justify-center"
+            >
+              <div className="w-1.5 h-1.5 bg-white rounded-full" />
+            </motion.div>
+          )}
+
+          {/* Zoom: Yellow Triangle */}
+          {cursorType === 'zoom' && (
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0, rotate: -45 }}
+              animate={{ scale: 1.5, opacity: 1, rotate: 0 }}
+              exit={{ scale: 0.5, opacity: 0, rotate: 45 }}
+              className="w-10 h-10 flex items-center justify-center relative"
+            >
+              <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                <polygon 
+                  points="50,5 95,95 5,95" 
+                  className="fill-primary-yellow stroke-black" 
+                  strokeWidth="8"
+                />
+              </svg>
+              <span className="absolute top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-[8px] font-black text-black">
                 VIEW
-              </motion.span>
-            )}
-            
-            {cursorType === 'pointer' && (
-              <div className="w-2 h-2 bg-white rounded-full" />
-            )}
-          </motion.div>
+              </span>
+            </motion.div>
+          )}
         </motion.div>
       )}
     </AnimatePresence>
