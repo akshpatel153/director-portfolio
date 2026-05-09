@@ -5,27 +5,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 export function GlitchTransition() {
   const location = useLocation();
   const [isGlitching, setIsGlitching] = useState(false);
-  const [displayLocation, setDisplayLocation] = useState(location);
 
   useEffect(() => {
-    if (location.pathname !== displayLocation.pathname) {
-      setIsGlitching(true);
-      
-      // Delay the actual route switch to the middle of the glitch
-      const timer = setTimeout(() => {
-        setDisplayLocation(location);
-      }, 150);
+    setIsGlitching(true);
+    
+    const endTimer = setTimeout(() => {
+      setIsGlitching(false);
+    }, 500); // slightly longer to ensure full animation cycle
 
-      const endTimer = setTimeout(() => {
-        setIsGlitching(false);
-      }, 400);
-
-      return () => {
-        clearTimeout(timer);
-        clearTimeout(endTimer);
-      };
-    }
-  }, [location, displayLocation]);
+    return () => {
+      clearTimeout(endTimer);
+    };
+  }, [location.pathname]); // Trigger on every pathname change
 
   return (
     <AnimatePresence>
