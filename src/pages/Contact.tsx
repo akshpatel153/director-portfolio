@@ -27,14 +27,21 @@ export function Contact() {
             </div>
           </div>
 
-          <form className="flex-1 space-y-6" onSubmit={(e) => e.preventDefault()}>
+          <form 
+            className="flex-1 space-y-6" 
+            onSubmit={(e) => {
+              e.preventDefault();
+              alert("Message Received. Directore will be in touch shortly.");
+            }}
+          >
             <div className="flex flex-col">
               <label htmlFor="name" className="font-bold uppercase tracking-widest text-sm mb-2">Name</label>
               <input 
                 type="text" 
                 id="name" 
-                className="border-4 border-black p-4 text-lg font-medium focus:outline-none focus:ring-4 focus:ring-primary-yellow focus:border-black transition-all shadow-[4px_4px_0px_0px_black]"
-                placeholder="JOHN DOE"
+                required
+                className="border-4 border-black p-4 text-lg font-medium focus:outline-none focus:ring-4 focus:ring-primary-yellow focus:border-black transition-all shadow-[4px_4px_0px_0px_black] bg-white"
+                placeholder="YOUR NAME"
               />
             </div>
             
@@ -43,8 +50,9 @@ export function Contact() {
               <input 
                 type="email" 
                 id="email" 
-                className="border-4 border-black p-4 text-lg font-medium focus:outline-none focus:ring-4 focus:ring-primary-blue focus:border-black transition-all shadow-[4px_4px_0px_0px_black]"
-                placeholder="JOHN@DOE.COM"
+                required
+                className="border-4 border-black p-4 text-lg font-medium focus:outline-none focus:ring-4 focus:ring-primary-blue focus:border-black transition-all shadow-[4px_4px_0px_0px_black] bg-white"
+                placeholder="EMAIL@ADDRESS.COM"
               />
             </div>
             
@@ -53,8 +61,9 @@ export function Contact() {
               <textarea 
                 id="message" 
                 rows={5}
-                className="border-4 border-black p-4 text-lg font-medium focus:outline-none focus:ring-4 focus:ring-primary-red focus:border-black transition-all shadow-[4px_4px_0px_0px_black] resize-none"
-                placeholder="LET'S BUILD SOMETHING..."
+                required
+                className="border-4 border-black p-4 text-lg font-medium focus:outline-none focus:ring-4 focus:ring-primary-red focus:border-black transition-all shadow-[4px_4px_0px_0px_black] resize-none bg-white"
+                placeholder="TELL ME ABOUT THE PROJECT..."
               ></textarea>
             </div>
             

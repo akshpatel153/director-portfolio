@@ -17,6 +17,7 @@ import { AudioPlayer } from './components/ui/AudioPlayer';
 import { Preloader } from './components/ui/Preloader';
 import { ScrollToTop } from './components/ui/ScrollToTop';
 import { CustomCursor } from './components/ui/CustomCursor';
+import { BackToTop } from './components/ui/BackToTop';
 import { GlitchTransition } from './components/ui/GlitchTransition';
 
 function AnimatedRoutes() {
@@ -42,6 +43,7 @@ function App() {
     <Router>
       <ScrollToTop />
       <CustomCursor />
+      <BackToTop />
       <GlitchTransition />
       {/* Preloader overlay */}
       <AnimatePresence>

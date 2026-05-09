@@ -17,6 +17,12 @@ export function CustomCursor() {
 
   useEffect(() => {
     // Detect touch device
+    const handleTouch = () => {
+      setIsTouchDevice(true);
+      window.removeEventListener('touchstart', handleTouch);
+    };
+    window.addEventListener('touchstart', handleTouch, { passive: true });
+
     const touch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     setIsTouchDevice(touch);
     if (touch) return;
