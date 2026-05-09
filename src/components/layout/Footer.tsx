@@ -104,16 +104,18 @@ export function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="px-6 md:px-12 py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-white/30 text-[11px] font-bold uppercase tracking-[0.2em]">
-        <span>© {new Date().getFullYear()} Directore. All rights reserved.</span>
-        <div className="flex items-center gap-4">
+      <div className="px-6 md:px-12 py-5 grid grid-cols-1 md:grid-cols-3 items-center gap-3 text-white/30 text-[11px] font-bold uppercase tracking-[0.2em]">
+        <span className="text-center md:text-left">© {new Date().getFullYear()} Directore. All rights reserved.</span>
+        
+        <div className="flex items-center justify-center gap-4">
           <div className="w-3 h-3 rounded-full bg-primary-red" />
           <div className="w-3 h-3 bg-primary-blue" />
           <svg viewBox="0 0 100 100" className="w-3 h-3">
             <polygon points="50,0 0,100 100,100" fill="#FFD700" />
           </svg>
         </div>
-        <span>Built Frame by Frame</span>
+        
+        <span className="text-center md:text-right">Built Frame by Frame</span>
       </div>
 
     </footer>
