@@ -20,8 +20,8 @@ export function Home() {
         <section className="w-full bg-background border-b-4 border-black relative overflow-hidden flex flex-col items-center justify-center">
           {/* Background Marquees */}
           <div className="absolute inset-0 z-0 flex flex-col justify-center gap-8 py-12 pointer-events-none opacity-20 scale-110 -rotate-3 origin-center">
-            <Marquee text="CAPTURE" speed={0.8} direction="left" textClassName="text-8xl md:text-[14rem] font-black uppercase tracking-tighter text-black leading-none" />
             <Marquee text="MOTION" speed={1.2} direction="right" textClassName="text-8xl md:text-[14rem] font-black uppercase tracking-tighter text-black outline-text-black text-transparent leading-none" />
+            <Marquee text="CAPTURE" speed={0.8} direction="left" textClassName="text-8xl md:text-[14rem] font-black uppercase tracking-tighter text-black leading-none" />
             <Marquee text="CUT" speed={0.5} direction="left" textClassName="text-8xl md:text-[14rem] font-black uppercase tracking-tighter text-black leading-none" />
           </div>
 

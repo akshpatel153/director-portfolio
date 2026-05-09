@@ -10,7 +10,7 @@ export const HERO_CONTENT = {
 };
 
 export const PHILOSOPHY_CONTENT = {
-  title: "Capture \n Motion \n Cut",
+  title: "Motion \n Capture \n Cut",
   paragraph1: "I reject the superfluous. Unnecessary transitions and soft edits are distractions. My work focuses on raw, functional composition and uncompromising visual storytelling.",
   paragraph2: "Whether it's framing the perfect still, shooting dynamic videography, or cutting together a heavy, impactful sequence, the goal is absolute clarity."
 };
