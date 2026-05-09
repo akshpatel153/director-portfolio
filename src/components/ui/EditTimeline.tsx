@@ -1,6 +1,13 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
+import { GALLERY_PHOTOS } from '../../data/portfolio';
 
 export function EditTimeline() {
+  const [hoveredClip, setHoveredClip] = useState<{ i: number, j: number } | null>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const tracks = [
     { label: 'V1', color: 'bg-primary-red', clips: [30, 20, 40, 10], type: 'video' },
     { label: 'V2', color: 'bg-primary-blue', clips: [10, 50, 15, 25], type: 'video' },
@@ -8,8 +15,74 @@ export function EditTimeline() {
     { label: 'A2', color: 'bg-white/20', clips: [40, 20, 40], type: 'audio' },
   ];
 
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    });
+  };
+
+  const handleClipEnter = (i: number, j: number) => {
+    setHoveredClip({ i, j });
+    // Pick a pseudo-random image based on indices to keep it consistent for that session
+    const imgIndex = (i * 10 + j) % GALLERY_PHOTOS.length;
+    setPreviewImage(GALLERY_PHOTOS[imgIndex].src);
+  };
+
   return (
-    <div className="w-full h-full bg-[#0a0a0a] relative overflow-hidden flex flex-col justify-center p-8 font-mono">
+    <div 
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      className="w-full h-full bg-[#0a0a0a] relative overflow-hidden flex flex-col justify-center p-8 font-mono cursor-crosshair"
+    >
+      {/* Floating Preview Window */}
+      <AnimatePresence>
+        {hoveredClip && previewImage && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1, 
+              rotate: 0,
+              x: mousePos.x + 20, 
+              y: mousePos.y - 120 
+            }}
+            exit={{ opacity: 0, scale: 0.8, rotate: 5 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25, mass: 0.5 }}
+            className="fixed pointer-events-none z-50 w-48 h-32 border-4 border-white bg-black overflow-hidden shadow-[10px_10px_0px_0px_rgba(208,32,32,1)]"
+            style={{ position: 'absolute' }}
+          >
+            {/* Glitch Overlay Effect */}
+            <motion.div 
+              animate={{ 
+                x: [-2, 2, -1, 0],
+                filter: [
+                  "hue-rotate(0deg) contrast(1)",
+                  "hue-rotate(90deg) contrast(1.2)",
+                  "hue-rotate(-45deg) contrast(1.1)",
+                  "hue-rotate(0deg) contrast(1)"
+                ]
+              }}
+              transition={{ repeat: Infinity, duration: 0.2 }}
+              className="absolute inset-0 z-10 mix-blend-overlay opacity-30 bg-primary-red pointer-events-none" 
+            />
+            
+            <img 
+              src={previewImage} 
+              alt="Preview" 
+              className="w-full h-full object-cover grayscale"
+            />
+
+            <div className="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm text-[8px] text-white p-1 flex justify-between border-t border-white/20">
+              <span>PRVW_MODE</span>
+              <span>CLIP_{hoveredClip.i}_{hoveredClip.j}</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Timecode Header */}
       <div className="absolute top-8 left-8 right-8 flex justify-between items-end border-b border-white/10 pb-4">
         <div className="flex flex-col">
@@ -38,11 +111,13 @@ export function EditTimeline() {
               {track.clips.map((width, j) => (
                 <motion.div
                   key={j}
+                  onMouseEnter={() => handleClipEnter(i, j)}
+                  onMouseLeave={() => setHoveredClip(null)}
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
                   transition={{ delay: i * 0.1 + j * 0.05, duration: 0.8, ease: "circOut" }}
                   style={{ width: `${width}%` }}
-                  className={`h-8 ${track.color} border border-black/20 relative overflow-hidden group/clip`}
+                  className={`h-8 ${track.color} border border-black/20 relative overflow-hidden group/clip cursor-none`}
                 >
                   {/* Clip "Shimmer" or waveform */}
                   {track.type === 'audio' && (
