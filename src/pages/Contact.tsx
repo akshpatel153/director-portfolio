@@ -1,9 +1,35 @@
+import { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { PageTransition } from '../components/layout/PageTransition';
 import { CTA } from '../components/sections/CTA';
 import { Button } from '../components/ui/Button';
 import { playClickSound } from '../lib/sounds';
 
 export function Contact() {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formRef.current) return;
+
+    setStatus('sending');
+
+    try {
+      await emailjs.sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID, 
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID, 
+        formRef.current, 
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+      setStatus('sent');
+      formRef.current.reset();
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+      setStatus('error');
+    }
+  };
+
   return (
     <PageTransition>
       <CTA />
@@ -29,19 +55,38 @@ export function Contact() {
           </div>
 
           <form 
+            ref={formRef}
             className="flex-1 space-y-6" 
-            onSubmit={(e) => {
-              e.preventDefault();
-              alert("Message Received. Directore will be in touch shortly.");
-            }}
+            onSubmit={handleSubmit}
           >
+            {status === 'sent' && (
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="bg-primary-blue text-white p-4 font-bold uppercase tracking-widest text-sm shadow-[4px_4px_0px_0px_black]"
+              >
+                ✓ Message Received. I'll be in touch.
+              </motion.div>
+            )}
+
+            {status === 'error' && (
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="bg-primary-red text-white p-4 font-bold uppercase tracking-widest text-sm shadow-[4px_4px_0px_0px_black]"
+              >
+                ⚠ Something went wrong. Try again later.
+              </motion.div>
+            )}
             <div className="flex flex-col">
               <label htmlFor="name" className="font-bold uppercase tracking-widest text-sm mb-2">Name</label>
               <input 
                 type="text" 
                 id="name" 
+                name="user_name"
                 required
-                className="border-4 border-black p-4 text-lg font-medium focus:outline-none focus:ring-4 focus:ring-primary-yellow focus:border-black transition-all shadow-[4px_4px_0px_0px_black] bg-white"
+                disabled={status === 'sending'}
+                className="border-4 border-black p-4 text-lg font-medium focus:outline-none focus:ring-4 focus:ring-primary-yellow focus:border-black transition-all shadow-[4px_4px_0px_0px_black] bg-white disabled:opacity-50"
                 placeholder="YOUR NAME"
               />
             </div>
@@ -51,8 +96,10 @@ export function Contact() {
               <input 
                 type="email" 
                 id="email" 
+                name="user_email"
                 required
-                className="border-4 border-black p-4 text-lg font-medium focus:outline-none focus:ring-4 focus:ring-primary-blue focus:border-black transition-all shadow-[4px_4px_0px_0px_black] bg-white"
+                disabled={status === 'sending'}
+                className="border-4 border-black p-4 text-lg font-medium focus:outline-none focus:ring-4 focus:ring-primary-blue focus:border-black transition-all shadow-[4px_4px_0px_0px_black] bg-white disabled:opacity-50"
                 placeholder="EMAIL@ADDRESS.COM"
               />
             </div>
@@ -61,15 +108,22 @@ export function Contact() {
               <label htmlFor="message" className="font-bold uppercase tracking-widest text-sm mb-2">Message</label>
               <textarea 
                 id="message" 
+                name="message"
                 rows={5}
                 required
-                className="border-4 border-black p-4 text-lg font-medium focus:outline-none focus:ring-4 focus:ring-primary-red focus:border-black transition-all shadow-[4px_4px_0px_0px_black] resize-none bg-white"
+                disabled={status === 'sending'}
+                className="border-4 border-black p-4 text-lg font-medium focus:outline-none focus:ring-4 focus:ring-primary-red focus:border-black transition-all shadow-[4px_4px_0px_0px_black] resize-none bg-white disabled:opacity-50"
                 placeholder="TELL ME ABOUT THE PROJECT..."
               ></textarea>
             </div>
             
-            <Button variant="primary" className="w-full text-xl py-6 mt-4">
-              Send Message
+            <Button 
+              type="submit"
+              variant="primary" 
+              className="w-full text-xl py-6 mt-4"
+              disabled={status === 'sending'}
+            >
+              {status === 'sending' ? 'Sending...' : 'Send Message'}
             </Button>
           </form>
 
