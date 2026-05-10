@@ -17,7 +17,6 @@ export function Contact() {
     setStatus('sending');
 
     try {
-      // Add formatted time before sending
       const now = new Date();
       const timeStr = now.toLocaleString('en-US', { 
         weekday: 'short', 
@@ -28,10 +27,19 @@ export function Contact() {
         minute: '2-digit' 
       });
 
-      await emailjs.sendForm(
+      // Manually extract data to be 100% sure everything is captured
+      const formData = new FormData(formRef.current);
+      const templateParams = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        message: formData.get('message'),
+        time: timeStr
+      };
+
+      await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID, 
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID, 
-        formRef.current, 
+        templateParams, 
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
       setStatus('sent');
