@@ -17,6 +17,17 @@ export function Contact() {
     setStatus('sending');
 
     try {
+      // Add formatted time before sending
+      const now = new Date();
+      const timeStr = now.toLocaleString('en-US', { 
+        weekday: 'short', 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric', 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      });
+
       await emailjs.sendForm(
         import.meta.env.VITE_EMAILJS_SERVICE_ID, 
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID, 
@@ -79,12 +90,15 @@ export function Contact() {
                 ⚠ Something went wrong. Try again later.
               </motion.div>
             )}
+            {/* Hidden time field for EmailJS template */}
+            <input type="hidden" name="time" value={new Date().toLocaleString()} />
+
             <div className="flex flex-col">
               <label htmlFor="name" className="font-bold uppercase tracking-widest text-sm mb-2">Name</label>
               <input 
                 type="text" 
                 id="name" 
-                name="user_name"
+                name="name"
                 required
                 disabled={status === 'sending'}
                 className="border-4 border-black p-4 text-lg font-medium focus:outline-none focus:ring-4 focus:ring-primary-yellow focus:border-black transition-all shadow-[4px_4px_0px_0px_black] bg-white disabled:opacity-50"
@@ -97,7 +111,7 @@ export function Contact() {
               <input 
                 type="email" 
                 id="email" 
-                name="user_email"
+                name="email"
                 required
                 disabled={status === 'sending'}
                 className="border-4 border-black p-4 text-lg font-medium focus:outline-none focus:ring-4 focus:ring-primary-blue focus:border-black transition-all shadow-[4px_4px_0px_0px_black] bg-white disabled:opacity-50"
