@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { playClickSound } from '../../lib/sounds';
 
 interface LightboxProps {
   isOpen: boolean;
@@ -32,7 +33,10 @@ export function Lightbox({ isOpen, onClose, image, title }: LightboxProps) {
         >
           {/* Close button */}
           <button
-            onClick={onClose}
+            onClick={() => {
+              playClickSound();
+              onClose();
+            }}
             className="absolute top-8 right-8 text-white text-4xl font-black z-10 hover:rotate-90 transition-transform"
           >
             ×

@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { GALLERY_PHOTOS } from '../../data/portfolio';
 import { Lightbox } from './Lightbox';
+import { playClickSound } from '../../lib/sounds';
 
 export function DesktopScrollGallery() {
   const targetRef = useRef<HTMLDivElement>(null);
@@ -28,6 +29,7 @@ export function DesktopScrollGallery() {
   });
 
   const openLightbox = (image: string, title: string) => {
+    playClickSound();
     setLightbox({ isOpen: true, image, title });
   };
 

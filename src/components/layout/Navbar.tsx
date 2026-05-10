@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '../ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { playClickSound } from '../../lib/sounds';
 
 const NAV_LINKS = [
   { path: '/', label: 'Home', hoverColor: 'hover:text-primary-red', lineColor: 'bg-primary-red', mobileAccent: 'border-primary-red' },
@@ -39,6 +40,7 @@ export function Navbar() {
               <Link
                 key={link.path}
                 to={link.path}
+                onClick={playClickSound}
                 className={`relative py-2 transition-colors ${link.hoverColor}`}
               >
                 {link.label}
@@ -64,7 +66,10 @@ export function Navbar() {
 
         {/* Mobile hamburger / close */}
         <button
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => {
+            playClickSound();
+            setIsOpen(!isOpen);
+          }}
           className="md:hidden flex flex-col justify-center items-center w-10 h-10 border-2 border-black bg-white shadow-[2px_2px_0px_0px_black] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none relative"
         >
           <motion.div
@@ -104,7 +109,10 @@ export function Navbar() {
                   >
                     <Link
                       to={link.path}
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => {
+                        playClickSound();
+                        setIsOpen(false);
+                      }}
                       className={`block py-4 px-4 font-black text-3xl uppercase tracking-tighter text-white border-l-4 ${
                         isActive ? link.mobileAccent : 'border-transparent'
                       } hover:border-white transition-all`}

@@ -1,5 +1,6 @@
 
 import { cn } from '../../lib/utils';
+import { playClickSound } from '../../lib/sounds';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'yellow' | 'outline' | 'ghost';
@@ -15,6 +16,11 @@ export function Button({
   children,
   ...props
 }: ButtonProps) {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    playClickSound();
+    if (props.onClick) props.onClick(e);
+  };
+
   const baseStyles = "inline-flex items-center justify-center font-bold uppercase tracking-wider transition-all duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black px-6 py-3";
   
   const shapeStyles = shape === 'square' ? 'rounded-none' : 'rounded-full';
@@ -30,6 +36,7 @@ export function Button({
   return (
     <button
       className={cn(baseStyles, shapeStyles, variants[variant], className)}
+      onClick={handleClick}
       {...props}
     >
       {children}

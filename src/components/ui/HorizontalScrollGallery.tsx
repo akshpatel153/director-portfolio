@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GALLERY_PHOTOS } from '../../data/portfolio';
 import { Lightbox } from './Lightbox';
+import { playClickSound } from '../../lib/sounds';
 
 export function HorizontalScrollGallery() {
   const [current, setCurrent] = useState(0);
@@ -9,6 +10,7 @@ export function HorizontalScrollGallery() {
   const total = GALLERY_PHOTOS.length;
 
   const paginate = (dir: number) => {
+    playClickSound();
     setDirection(dir);
     setCurrent((prev) => (prev + dir + total) % total);
   };
@@ -26,6 +28,7 @@ export function HorizontalScrollGallery() {
   });
 
   const openLightbox = (image: string, title: string) => {
+    playClickSound();
     setLightbox({ isOpen: true, image, title });
   };
 

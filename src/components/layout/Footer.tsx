@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { playClickSound } from '../../lib/sounds';
 
 const NAV_LINKS = [
   { path: '/', label: 'Home' },
@@ -51,6 +52,7 @@ export function Footer() {
               <li key={link.path}>
                 <Link
                   to={link.path}
+                  onClick={playClickSound}
                   className="font-bold uppercase tracking-widest text-white/50 hover:text-white text-sm transition-colors duration-200 flex items-center gap-2 group"
                 >
                   <span className="w-4 h-[2px] bg-white/20 group-hover:bg-primary-red group-hover:w-6 transition-all duration-200" />
@@ -73,6 +75,7 @@ export function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={playClickSound}
                   className="font-bold uppercase tracking-widest text-white/50 hover:text-white text-sm transition-colors duration-200 flex items-center gap-2 group"
                 >
                   <span className="w-4 h-[2px] bg-white/20 group-hover:bg-primary-blue group-hover:w-6 transition-all duration-200" />
@@ -95,6 +98,7 @@ export function Footer() {
           </div>
           <Link
             to="/contact"
+            onClick={playClickSound}
             className="inline-flex items-center gap-3 bg-primary-red text-white font-black uppercase tracking-widest text-sm px-6 py-4 border-2 border-white shadow-[4px_4px_0px_0px_white] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-150 w-fit"
           >
             Let's Talk
