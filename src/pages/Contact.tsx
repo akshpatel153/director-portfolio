@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 import { PageTransition } from '../components/layout/PageTransition';
 import { CTA } from '../components/sections/CTA';
