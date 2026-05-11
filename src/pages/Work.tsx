@@ -19,9 +19,9 @@ export function Work() {
         <div className="min-h-screen bg-[#121212] text-white pt-24 pb-32">
           
           <div className="max-w-7xl mx-auto px-6 md:px-12">
-            <header className="mb-24 border-l-8 border-primary-red pl-8">
-              <p className="text-sm font-black uppercase tracking-[0.4em] text-gray-500 mb-4">— Archive</p>
-              <h1 className="text-6xl md:text-9xl font-black uppercase tracking-tighter leading-none text-white">
+            <header className="mb-16 md:mb-24 border-l-8 border-primary-red pl-6 md:pl-8">
+              <p className="text-[10px] md:text-sm font-black uppercase tracking-[0.4em] text-gray-500 mb-4">— Archive</p>
+              <h1 className="text-5xl sm:text-7xl md:text-9xl font-black uppercase tracking-tighter leading-[0.9] text-white">
                 Selected <br /> Works
               </h1>
             </header>

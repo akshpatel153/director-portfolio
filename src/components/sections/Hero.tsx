@@ -18,7 +18,7 @@ export function Hero() {
           transition={{ duration: 0.5, ease: "circOut" }}
           className="relative z-10 max-w-xl"
         >
-          <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-black uppercase tracking-tighter leading-[0.95] mb-10">
+          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] font-black uppercase tracking-tighter leading-[0.95] mb-10">
             {HERO_CONTENT.titleLine1} <br />
             <span className="text-primary-red">{HERO_CONTENT.titleLine2}</span>
           </h1>

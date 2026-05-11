@@ -7,12 +7,12 @@ import { playClickSound } from '../../lib/sounds';
 
 // Asymmetric brutalist grid config: [col-span, row-span, aspect]
 const GRID_CONFIG = [
-  { cols: 'md:col-span-2', aspect: 'aspect-[16/7]' },  // wide hero
+  { cols: 'md:col-span-2', aspect: 'aspect-video md:aspect-[16/7]' },  // wide hero
   { cols: 'md:col-span-1', aspect: 'aspect-square' },
   { cols: 'md:col-span-1', aspect: 'aspect-square' },
-  { cols: 'md:col-span-1', aspect: 'aspect-[3/4]' },
-  { cols: 'md:col-span-2', aspect: 'aspect-[16/7]' },  // wide hero
-  { cols: 'md:col-span-1', aspect: 'aspect-[3/4]' },
+  { cols: 'md:col-span-1', aspect: 'aspect-video md:aspect-[3/4]' },
+  { cols: 'md:col-span-2', aspect: 'aspect-video md:aspect-[16/7]' },  // wide hero
+  { cols: 'md:col-span-1', aspect: 'aspect-video md:aspect-[3/4]' },
 ];
 
 function ParallaxPhoto({ photo, config, index, onClick }: {
