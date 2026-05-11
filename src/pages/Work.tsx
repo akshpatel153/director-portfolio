@@ -2,8 +2,15 @@ import { motion } from 'framer-motion';
 import { PageTransition } from '../components/layout/PageTransition';
 import { SectionWipe } from '../components/ui/SectionWipe';
 import { PROJECTS } from '../data/portfolio';
-import { GeometricDecorations } from '../components/ui/GeometricDecorations';
+import { Circle, Square, Triangle } from '../components/ui/GeometricDecorations';
 import { playClickSound } from '../lib/sounds';
+
+const ShapeSelector = ({ shape, color, className }: { shape: string, color: string, className?: string }) => {
+  const colorClass = color === 'red' ? 'bg-primary-red' : color === 'blue' ? 'bg-primary-blue' : 'bg-primary-yellow';
+  if (shape === 'circle') return <Circle className={`${colorClass} ${className}`} />;
+  if (shape === 'square') return <Square className={`${colorClass} ${className}`} />;
+  return <Triangle className={`${colorClass} ${className}`} />;
+};
 
 export function Work() {
   return (
@@ -27,7 +34,8 @@ export function Work() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.8, ease: "circOut" }}
-                  className="group relative"
+                  className="group relative cursor-pointer"
+                  onClick={playClickSound}
                 >
                   <div className="flex flex-col lg:flex-row gap-12 items-start">
                     {/* Project Index */}
@@ -40,7 +48,7 @@ export function Work() {
                     {/* Content */}
                     <div className="flex-grow">
                       <div className="flex items-center gap-4 mb-6">
-                        <GeometricDecorations 
+                        <ShapeSelector 
                           shape={project.shape} 
                           color={project.decorationColor} 
                           className="w-8 h-8 opacity-50"
@@ -79,7 +87,7 @@ export function Work() {
 
                     {/* Hover Decoration */}
                     <div className="absolute top-0 right-0 pointer-events-none opacity-0 group-hover:opacity-20 transition-opacity duration-700 blur-3xl">
-                      <GeometricDecorations 
+                      <ShapeSelector 
                         shape={project.shape} 
                         color={project.decorationColor} 
                         className="w-[30vw] h-[30vw]"
