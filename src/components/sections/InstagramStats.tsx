@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { INSTAGRAM_STATS } from '../../data/portfolio';
+import { playClickSound } from '../../lib/sounds';
 
 export function InstagramStats() {
   return (
@@ -32,6 +33,7 @@ export function InstagramStats() {
             href={INSTAGRAM_STATS.link} 
             target="_blank" 
             rel="noopener noreferrer"
+            onClick={playClickSound}
             className="group relative inline-flex items-center justify-center font-bold text-lg uppercase tracking-widest text-black bg-white px-8 py-4 border-4 border-white transition-all duration-300 hover:bg-transparent hover:text-white"
           >
             <span className="relative z-10 flex items-center gap-2">

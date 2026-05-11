@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { EditTimeline } from '../ui/EditTimeline';
 import { motion } from 'framer-motion';
 import { HERO_CONTENT } from '../../data/portfolio';
+import { playClickSound } from '../../lib/sounds';
 
 export function Hero() {
   return (
@@ -37,6 +38,7 @@ export function Hero() {
           >
             <Link 
               to="/work"
+              onClick={playClickSound}
               className="group relative inline-flex items-center justify-center font-bold text-lg md:text-xl uppercase tracking-widest text-black bg-white px-8 py-4 border-4 border-black transition-all duration-300 hover:text-white w-full sm:w-auto"
             >
               <span className="relative z-10">View Work</span>
@@ -48,6 +50,7 @@ export function Hero() {
 
             <Link 
               to="/photography"
+              onClick={playClickSound}
               className="group relative inline-flex items-center justify-center font-bold text-lg md:text-xl uppercase tracking-widest text-black bg-white px-8 py-4 border-4 border-black transition-all duration-300 hover:text-black w-full sm:w-auto mt-4 sm:mt-0"
             >
               <span className="relative z-10">See Photos</span>

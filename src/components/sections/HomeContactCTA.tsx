@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { HOME_CONTACT_CTA } from '../../data/portfolio';
+import { playClickSound } from '../../lib/sounds';
 
 export function HomeContactCTA() {
   return (
@@ -38,6 +39,7 @@ export function HomeContactCTA() {
         >
           <Link 
             to="/contact"
+            onClick={playClickSound}
             className="group relative inline-flex items-center justify-center font-bold text-2xl md:text-4xl uppercase tracking-widest text-black bg-white px-12 py-6 border-4 border-black transition-all duration-300 hover:text-white"
           >
             <span className="relative z-10">{HOME_CONTACT_CTA.buttonText}</span>
@@ -51,6 +53,7 @@ export function HomeContactCTA() {
             href={HOME_CONTACT_CTA.resumeLink}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={playClickSound}
             className="text-sm font-medium tracking-widest uppercase opacity-70 hover:opacity-100 transition-opacity hover:underline underline-offset-4"
           >
             {HOME_CONTACT_CTA.resumeText}

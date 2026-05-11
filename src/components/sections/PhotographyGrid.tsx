@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom';
 import { GALLERY_PHOTOS } from '../../data/portfolio';
 import { Lightbox } from '../ui/Lightbox';
+import { playClickSound } from '../../lib/sounds';
 
 // Asymmetric brutalist grid config: [col-span, row-span, aspect]
 const GRID_CONFIG = [
@@ -123,6 +124,7 @@ export function PhotographyGrid({ featured = false }: { featured?: boolean }) {
   });
 
   const openLightbox = (image: string, title: string) => {
+    playClickSound();
     setLightbox({ isOpen: true, image, title });
   };
 
@@ -151,6 +153,7 @@ export function PhotographyGrid({ featured = false }: { featured?: boolean }) {
             </p>
             <Link
               to="/photography"
+              onClick={playClickSound}
               className="inline-flex items-center gap-3 border-2 border-white text-white font-black uppercase tracking-widest text-xs px-5 py-3 hover:bg-white hover:text-black transition-all duration-200"
             >
               Full Gallery
