@@ -40,11 +40,11 @@ export function Work() {
                     {/* Content */}
                     <div className="flex-grow">
                       <div className="flex items-center gap-4 mb-6">
-                        <ShapeSelector 
-                          shape={project.shape} 
-                          color={project.decorationColor} 
-                          className="w-8 h-8 opacity-50"
-                        />
+                        <div className={`w-3 h-3 rounded-full shrink-0 ${
+                          project.decorationColor === 'red' ? 'bg-primary-red' :
+                          project.decorationColor === 'blue' ? 'bg-primary-blue' :
+                          'bg-primary-yellow'
+                        }`} />
                         <span className="font-black uppercase tracking-[0.3em] text-primary-red text-xs">
                           {project.role}
                         </span>
