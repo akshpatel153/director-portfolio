@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { GALLERY_PHOTOS } from '../../data/portfolio';
 import { GalleryLightbox } from './GalleryLightbox';
