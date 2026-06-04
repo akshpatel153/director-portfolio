@@ -32,9 +32,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     await resend.emails.send({
       from: 'Directore Portfolio <onboarding@resend.dev>',
-      to: 'patelaksh1503@gmail.com',
+      to: 'axpatel009009@gmail.com',
       replyTo: email,
-      subject: `New Inquiry from ${name}`,
+      subject: `[Portfolio Inquiry] New message from ${name}`,
       html: `
         <div style="font-family: 'Courier New', monospace; background: #0a0a0a; color: #fff; padding: 40px; max-width: 600px; margin: 0 auto;">
           <!-- Header -->
