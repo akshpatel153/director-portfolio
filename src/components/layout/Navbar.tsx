@@ -7,7 +7,7 @@ import { playClickSound } from '../../lib/sounds';
 const NAV_LINKS = [
   { path: '/', label: 'Home', hoverColor: 'hover:text-primary-red', lineColor: 'bg-primary-red', mobileAccent: 'border-primary-red' },
   { path: '/work', label: 'Work', hoverColor: 'hover:text-primary-blue', lineColor: 'bg-primary-blue', mobileAccent: 'border-primary-blue' },
-  { path: '/about', label: 'About', hoverColor: 'hover:text-white', lineColor: 'bg-white', mobileAccent: 'border-white' },
+  { path: '/about', label: 'About', hoverColor: 'hover:text-primary-red', lineColor: 'bg-primary-red', mobileAccent: 'border-primary-red' },
   { path: '/photography', label: 'Photography', hoverColor: 'hover:text-primary-yellow', lineColor: 'bg-primary-yellow', mobileAccent: 'border-primary-yellow' },
   { path: '/contact', label: 'Contact', hoverColor: 'hover:text-primary-red', lineColor: 'bg-primary-red', mobileAccent: 'border-primary-red' },
 ];
