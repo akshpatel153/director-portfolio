@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { PageTransition } from '../components/layout/PageTransition';
 import { CTA } from '../components/sections/CTA';
 import { playClickSound } from '../lib/sounds';
+import { Mail, Instagram, Youtube, Linkedin } from 'lucide-react';
 
 export function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -85,38 +86,30 @@ export function Contact() {
               </div>
             </div>
             
-            {/* Social rows as technical specs */}
-            <div className="space-y-4 font-bold uppercase tracking-widest text-xs">
-              <span className="block text-[9px] font-black tracking-[0.3em] text-white/20 mb-2">
-                — Active Links
+            {/* Social icons row */}
+            <div className="mt-8">
+              <span className="block text-[9px] font-black uppercase tracking-[0.3em] text-white/20 mb-4">
+                — Connect Transmission
               </span>
-              
-              <div className="border-b border-white/10 pb-3 flex justify-between items-center group">
-                <span className="text-white/40">Email</span>
-                <a href="mailto:axpatel009009@gmail.com" className="text-primary-red hover:underline font-black">
-                  axpatel009009@gmail.com
-                </a>
-              </div>
-
-              <div className="border-b border-white/10 pb-3 flex justify-between items-center group">
-                <span className="text-white/40">Instagram</span>
-                <a href="https://www.instagram.com/aksh.ae_" target="_blank" rel="noopener noreferrer" onClick={playClickSound} className="text-primary-blue hover:underline font-black">
-                  @aksh.ae_
-                </a>
-              </div>
-
-              <div className="border-b border-white/10 pb-3 flex justify-between items-center group">
-                <span className="text-white/40">YouTube</span>
-                <a href="https://www.youtube.com/@HimymBeats/featured" target="_blank" rel="noopener noreferrer" onClick={playClickSound} className="text-primary-yellow hover:underline font-black">
-                  @HimymBeats
-                </a>
-              </div>
-
-              <div className="border-b border-white/10 pb-3 flex justify-between items-center group">
-                <span className="text-white/40">LinkedIn</span>
-                <a href="https://www.linkedin.com/in/aksh-patel-cs/" target="_blank" rel="noopener noreferrer" onClick={playClickSound} className="text-primary-blue hover:underline font-black">
-                  Aksh Patel
-                </a>
+              <div className="flex flex-wrap gap-4">
+                {[
+                  { label: 'Email', icon: <Mail className="w-5 h-5" />, href: 'mailto:axpatel009009@gmail.com', colorClass: 'border-primary-red text-primary-red hover:bg-primary-red hover:text-black shadow-[4px_4px_0px_0px_rgba(208,32,32,0.15)]' },
+                  { label: 'Instagram', icon: <Instagram className="w-5 h-5" />, href: 'https://www.instagram.com/aksh.ae_', colorClass: 'border-primary-blue text-primary-blue hover:bg-primary-blue hover:text-white shadow-[4px_4px_0px_0px_rgba(16,64,192,0.15)]' },
+                  { label: 'YouTube', icon: <Youtube className="w-5 h-5" />, href: 'https://www.youtube.com/@HimymBeats/featured', colorClass: 'border-primary-yellow text-primary-yellow hover:bg-primary-yellow hover:text-black shadow-[4px_4px_0px_0px_rgba(240,192,32,0.15)]' },
+                  { label: 'LinkedIn', icon: <Linkedin className="w-5 h-5" />, href: 'https://www.linkedin.com/in/aksh-patel-cs/', colorClass: 'border-primary-blue text-primary-blue hover:bg-primary-blue hover:text-white shadow-[4px_4px_0px_0px_rgba(16,64,192,0.15)]' },
+                ].map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target={link.label === 'Email' ? '_self' : '_blank'}
+                    rel="noopener noreferrer"
+                    onClick={playClickSound}
+                    title={link.label}
+                    className={`w-14 h-14 flex items-center justify-center border-2 font-black transition-all duration-200 bg-white/[0.02] active:translate-x-[2px] active:translate-y-[2px] ${link.colorClass}`}
+                  >
+                    {link.icon}
+                  </a>
+                ))}
               </div>
             </div>
           </div>
