@@ -36,48 +36,105 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       replyTo: email,
       subject: `[Portfolio Inquiry] New message from ${name}`,
       html: `
-        <div style="font-family: 'Courier New', monospace; background: #0a0a0a; color: #fff; padding: 40px; max-width: 600px; margin: 0 auto;">
-          <!-- Header -->
-          <div style="border-bottom: 3px solid #D02020; padding-bottom: 24px; margin-bottom: 32px;">
-            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-              <div style="width: 10px; height: 10px; border-radius: 50%; background: #D02020;"></div>
-              <div style="width: 10px; height: 10px; background: #F0C020;"></div>
-              <div style="width: 10px; height: 10px; border-radius: 50%; background: #4ade80;"></div>
-            </div>
-            <p style="font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin: 0;">
-              DIRECTORE // INCOMING TRANSMISSION
-            </p>
-          </div>
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #080808; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 40px 0;">
+          <tr>
+            <td align="center">
+              <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="background-color: #0f0f0f; border: 4px solid #1a1a1a; padding: 40px; text-align: left;">
+                
+                <!-- Logo & Header -->
+                <tr>
+                  <td>
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-bottom: 4px solid #D02020; padding-bottom: 24px; margin-bottom: 32px;">
+                      <tr>
+                        <td>
+                          <!-- Geometric Logo Shapes -->
+                          <table role="presentation" cellspacing="0" cellpadding="0" style="margin-bottom: 12px;">
+                            <tr>
+                              <td style="width: 14px; height: 14px; background-color: #D02020; border-radius: 50%;"></td>
+                              <td style="width: 6px;"></td>
+                              <td style="width: 14px; height: 14px; background-color: #1040C0;"></td>
+                              <td style="width: 6px;"></td>
+                              <td style="width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 14px solid #F0C020;"></td>
+                            </tr>
+                          </table>
+                          <span style="font-size: 10px; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; color: #888888; font-family: 'Courier New', Courier, monospace;">
+                            DIRECTORE // PRODUCTION INQUIRY
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
 
-          <!-- Body -->
-          <p style="font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 8px;">
-            Message from
-          </p>
-          <h1 style="font-size: 36px; font-weight: 900; text-transform: uppercase; letter-spacing: -2px; color: #fff; margin: 0 0 4px 0;">
-            ${name}
-          </h1>
-          <p style="font-size: 13px; color: #D02020; margin: 0 0 32px 0;">${email}</p>
+                <!-- Sender Meta Details Card -->
+                <tr>
+                  <td>
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="20" style="background-color: #161616; border-left: 4px solid #1040C0; margin-bottom: 32px;">
+                      <tr>
+                        <td style="padding: 20px;">
+                          <p style="font-size: 10px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; color: #888888; margin: 0 0 6px 0;">Sender Details</p>
+                          <h2 style="font-size: 28px; font-weight: 900; text-transform: uppercase; color: #ffffff; margin: 0 0 4px 0; letter-spacing: -1px; line-height: 1.1;">
+                            ${name}
+                          </h2>
+                          <a href="mailto:${email}" style="font-size: 14px; font-weight: bold; color: #1040C0; text-decoration: none;">
+                            ${email}
+                          </a>
+                          
+                          <div style="height: 16px;"></div>
+                          
+                          <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td>
+                                <span style="font-size: 9px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; color: #555555; display: block;">Transmission Received</span>
+                                <span style="font-size: 12px; font-weight: bold; color: #aaaaaa; display: block; font-family: 'Courier New', Courier, monospace;">${time}</span>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
 
-          <!-- Message box -->
-          <div style="border: 1px solid rgba(255,255,255,0.1); padding: 24px; margin-bottom: 32px; background: rgba(255,255,255,0.03);">
-            <p style="font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin: 0 0 12px 0;">
-              Message
-            </p>
-            <p style="font-size: 16px; color: rgba(255,255,255,0.8); line-height: 1.7; margin: 0;">
-              ${message.replace(/\n/g, '<br/>')}
-            </p>
-          </div>
+                <!-- Message Body -->
+                <tr>
+                  <td>
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 40px;">
+                      <tr>
+                        <td>
+                          <p style="font-size: 10px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; color: #888888; margin: 0 0 12px 0;">Message</p>
+                          <div style="font-size: 16px; color: #e5e5e5; line-height: 1.8; font-weight: normal; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #080808; border: 1px solid #222222; padding: 24px; min-height: 120px;">
+                            ${message.replace(/\n/g, '<br/>')}
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
 
-          <!-- Meta -->
-          <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; display: flex; justify-content: space-between;">
-            <p style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.2); margin: 0;">
-              ${time}
-            </p>
-            <p style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.2); margin: 0;">
-              directore.portfolio
-            </p>
-          </div>
-        </div>
+                <!-- Footer -->
+                <tr>
+                  <td>
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-top: 2px dashed #222222; padding-top: 24px;">
+                      <tr>
+                        <td>
+                          <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td style="font-size: 10px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; color: #444444; font-family: 'Courier New', Courier, monospace;">
+                                SYSTEM: ONLINE // 4K · PRORES · ENGAGED
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+        </table>
       `,
     });
 
