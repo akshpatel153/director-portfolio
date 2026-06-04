@@ -32,7 +32,7 @@ export function BackToTop() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.5, y: 20 }}
           onClick={scrollToTop}
-          className="fixed bottom-24 right-6 md:right-12 z-[100] w-12 h-12 bg-white border-2 border-black flex items-center justify-center shadow-[4px_4px_0px_0px_black] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all group"
+          className="fixed bottom-24 right-6 md:right-12 z-[100] w-12 h-12 bg-white border-2 border-black hidden md:flex items-center justify-center shadow-[4px_4px_0px_0px_black] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all group"
           title="Back to Top"
         >
           <svg 

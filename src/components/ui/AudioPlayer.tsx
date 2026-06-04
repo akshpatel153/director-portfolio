@@ -42,7 +42,7 @@ export function AudioPlayer() {
   };
 
   return (
-    <div className="fixed bottom-6 left-6 z-50 flex items-end justify-start pointer-events-none pb-safe">
+    <div className="fixed bottom-6 left-6 z-50 hidden md:flex items-end justify-start pointer-events-none pb-safe">
       <audio ref={audioRef} src={TRACKS[trackIndex].src} onEnded={advanceTrack} onCanPlay={handleCanPlay} crossOrigin="anonymous" />
 
       {/* Bubble Control */}

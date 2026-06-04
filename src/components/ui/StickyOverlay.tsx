@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { STICKY_MESSAGES } from '../../data/portfolio';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export function StickyOverlay() {
+  const location = useLocation();
   const [messageIndex, setMessageIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
@@ -39,8 +40,10 @@ export function StickyOverlay() {
     return () => clearTimeout(timeout);
   }, [displayedText, isTyping, messageIndex]);
 
+  if (location.pathname === '/contact') return null;
+
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex items-end justify-end pointer-events-none pb-safe">
+    <div className="fixed bottom-6 right-6 z-50 hidden md:flex items-end justify-end pointer-events-none pb-safe">
       <Link 
         to="/contact" 
         className="pointer-events-auto group relative flex items-center bg-white border-[2px] border-black px-3 py-2 rounded-t-2xl rounded-bl-2xl rounded-br-sm shadow-[3px_3px_0px_0px_#D02020] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-200"
