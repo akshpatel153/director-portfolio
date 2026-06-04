@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { PageTransition } from '../components/layout/PageTransition';
 import { CTA } from '../components/sections/CTA';
 import { playClickSound } from '../lib/sounds';
-import { Mail, Instagram, Youtube, Linkedin } from 'lucide-react';
 
 export function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -93,10 +92,49 @@ export function Contact() {
               </span>
               <div className="flex flex-wrap gap-4">
                 {[
-                  { label: 'Email', icon: <Mail className="w-5 h-5" />, href: 'mailto:axpatel009009@gmail.com', colorClass: 'border-primary-red text-primary-red hover:bg-primary-red hover:text-black shadow-[4px_4px_0px_0px_rgba(208,32,32,0.15)]' },
-                  { label: 'Instagram', icon: <Instagram className="w-5 h-5" />, href: 'https://www.instagram.com/aksh.ae_', colorClass: 'border-primary-blue text-primary-blue hover:bg-primary-blue hover:text-white shadow-[4px_4px_0px_0px_rgba(16,64,192,0.15)]' },
-                  { label: 'YouTube', icon: <Youtube className="w-5 h-5" />, href: 'https://www.youtube.com/@HimymBeats/featured', colorClass: 'border-primary-yellow text-primary-yellow hover:bg-primary-yellow hover:text-black shadow-[4px_4px_0px_0px_rgba(240,192,32,0.15)]' },
-                  { label: 'LinkedIn', icon: <Linkedin className="w-5 h-5" />, href: 'https://www.linkedin.com/in/aksh-patel-cs/', colorClass: 'border-primary-blue text-primary-blue hover:bg-primary-blue hover:text-white shadow-[4px_4px_0px_0px_rgba(16,64,192,0.15)]' },
+                  { 
+                    label: 'Email', 
+                    icon: (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    ), 
+                    href: 'mailto:axpatel009009@gmail.com', 
+                    colorClass: 'border-primary-red text-primary-red hover:bg-primary-red hover:text-black shadow-[4px_4px_0px_0px_rgba(208,32,32,0.15)]' 
+                  },
+                  { 
+                    label: 'Instagram', 
+                    icon: (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                        <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zM17.5 6.5h.01" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    ), 
+                    href: 'https://www.instagram.com/aksh.ae_', 
+                    colorClass: 'border-primary-blue text-primary-blue hover:bg-primary-blue hover:text-white shadow-[4px_4px_0px_0px_rgba(16,64,192,0.15)]' 
+                  },
+                  { 
+                    label: 'YouTube', 
+                    icon: (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z" strokeLinecap="round" strokeLinejoin="round" />
+                        <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" />
+                      </svg>
+                    ), 
+                    href: 'https://www.youtube.com/@HimymBeats/featured', 
+                    colorClass: 'border-primary-yellow text-primary-yellow hover:bg-primary-yellow hover:text-black shadow-[4px_4px_0px_0px_rgba(240,192,32,0.15)]' 
+                  },
+                  { 
+                    label: 'LinkedIn', 
+                    icon: (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" strokeLinecap="round" strokeLinejoin="round" />
+                        <circle cx="4" cy="4" r="2" fill="currentColor" />
+                      </svg>
+                    ), 
+                    href: 'https://www.linkedin.com/in/aksh-patel-cs/', 
+                    colorClass: 'border-primary-blue text-primary-blue hover:bg-primary-blue hover:text-white shadow-[4px_4px_0px_0px_rgba(16,64,192,0.15)]' 
+                  },
                 ].map((link) => (
                   <a
                     key={link.label}
