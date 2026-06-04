@@ -2,7 +2,15 @@ import { motion } from 'framer-motion';
 import { PageTransition } from '../components/layout/PageTransition';
 import { SectionWipe } from '../components/ui/SectionWipe';
 import { PROJECTS } from '../data/portfolio';
+import { Circle, Square, Triangle } from '../components/ui/GeometricDecorations';
 import { playClickSound } from '../lib/sounds';
+
+const ShapeSelector = ({ shape, color, className }: { shape: string, color: string, className?: string }) => {
+  const colorClass = color === 'red' ? 'bg-primary-red' : color === 'blue' ? 'bg-primary-blue' : 'bg-primary-yellow';
+  if (shape === 'circle') return <Circle className={`${colorClass} ${className}`} />;
+  if (shape === 'square') return <Square className={`${colorClass} ${className}`} />;
+  return <Triangle className={`${colorClass} ${className}`} />;
+};
 
 export function Work() {
   return (
@@ -40,11 +48,11 @@ export function Work() {
                     {/* Content */}
                     <div className="flex-grow">
                       <div className="flex items-center gap-4 mb-6">
-                        <div className={`w-3 h-3 rounded-full shrink-0 ${
-                          project.decorationColor === 'red' ? 'bg-primary-red' :
-                          project.decorationColor === 'blue' ? 'bg-primary-blue' :
-                          'bg-primary-yellow'
-                        }`} />
+                        <ShapeSelector 
+                          shape={project.shape} 
+                          color={project.decorationColor} 
+                          className="w-8 h-8 opacity-50"
+                        />
                         <span className="font-black uppercase tracking-[0.3em] text-primary-red text-xs">
                           {project.role}
                         </span>
@@ -91,18 +99,14 @@ export function Work() {
                       </div>
                     </div>
 
-                    {/* Hover Preview Image */}
-                    {'preview' in project && project.preview && (
-                      <div className="absolute inset-y-0 right-0 w-1/2 pointer-events-none overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                        <img
-                          src={project.preview}
-                          alt={project.title}
-                          className="w-full h-full object-cover blur-2xl scale-110 brightness-50"
-                        />
-                        {/* Fade to left so it doesn't cut off the text */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-[#121212] via-[#121212]/60 to-transparent" />
-                      </div>
-                    )}
+                    {/* Hover Decoration */}
+                    <div className="absolute top-0 right-0 pointer-events-none opacity-0 group-hover:opacity-20 transition-opacity duration-700 blur-3xl">
+                      <ShapeSelector 
+                        shape={project.shape} 
+                        color={project.decorationColor} 
+                        className="w-[30vw] h-[30vw]"
+                      />
+                    </div>
                   </div>
                 </motion.div>
               ))}
