@@ -88,6 +88,7 @@ export const PROJECTS = [
     decorationColor: "yellow" as const,
     shape: "circle" as const,
     link: "https://wedding-invitation-steel-delta.vercel.app/wedding/sarah-james",
+    preview: "/images/projects/bloom-preview.jpg",
   },
   {
     title: "The Run",
@@ -97,6 +98,7 @@ export const PROJECTS = [
     color: "bg-primary-red",
     decorationColor: "red" as const,
     shape: "circle" as const,
+    preview: "/images/optimized/Image-ree-3.webp",
   },
   {
     title: "Concrete Jungle",
@@ -106,6 +108,7 @@ export const PROJECTS = [
     color: "bg-primary-blue",
     decorationColor: "blue" as const,
     shape: "square" as const,
+    preview: "/images/optimized/Image-7.webp",
   },
   {
     title: "Night Shift",
@@ -115,6 +118,7 @@ export const PROJECTS = [
     color: "bg-primary-yellow",
     decorationColor: "yellow" as const,
     shape: "triangle" as const,
+    preview: "/images/optimized/Image-re-3.webp",
   },
   {
     title: "Vogue Edit",
@@ -124,6 +128,7 @@ export const PROJECTS = [
     color: "bg-black",
     decorationColor: "red" as const,
     shape: "circle" as const,
+    preview: "/images/optimized/Image-ree-2.webp",
   }
 ];
 
