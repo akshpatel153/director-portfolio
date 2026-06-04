@@ -9,10 +9,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, email, message } = req.body as {
+  const { name, email, message, time } = req.body as {
     name: string;
     email: string;
     message: string;
+    time?: string;
   };
 
   // Basic validation
@@ -20,14 +21,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
-  const time = new Date().toLocaleString('en-US', {
+  const fallbackTime = new Date().toLocaleString('en-US', {
     weekday: 'short',
     year: 'numeric',
     month: 'short',
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
-  });
+    timeZone: 'UTC'
+  }) + ' UTC';
+
+  const displayTime = time || fallbackTime;
 
   try {
     await resend.emails.send({
@@ -86,7 +90,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                             <tr>
                               <td>
                                 <span style="font-size: 9px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; color: #555555; display: block;">Transmission Received</span>
-                                <span style="font-size: 12px; font-weight: bold; color: #aaaaaa; display: block; font-family: 'Courier New', Courier, monospace;">${time}</span>
+                                <span style="font-size: 12px; font-weight: bold; color: #aaaaaa; display: block; font-family: 'Courier New', Courier, monospace;">${displayTime}</span>
                               </td>
                             </tr>
                           </table>

@@ -16,6 +16,14 @@ export function Contact() {
     setStatus('sending');
 
     const formData = new FormData(formRef.current);
+    const clientTime = new Date().toLocaleString('en-US', {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
 
     try {
       const res = await fetch('/api/send', {
@@ -25,6 +33,7 @@ export function Contact() {
           name: formData.get('name'),
           email: formData.get('email'),
           message: formData.get('message'),
+          time: clientTime,
         }),
       });
 
