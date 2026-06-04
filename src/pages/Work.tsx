@@ -70,10 +70,24 @@ export function Work() {
                         ))}
                       </div>
 
-                      <p className="text-xl md:text-2xl text-white/50 max-w-3xl leading-relaxed font-medium mb-12">
+                      <p className="text-xl md:text-2xl text-white/50 max-w-3xl leading-relaxed font-medium mb-10">
                         {project.description}
                       </p>
 
+                      {/* Live Demo link */}
+                      {'link' in project && project.link && (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => { e.stopPropagation(); playClickSound(); }}
+                          className="inline-flex items-center gap-3 mb-10 border-2 border-primary-yellow text-primary-yellow font-black uppercase tracking-widest text-xs px-6 py-3 hover:bg-primary-yellow hover:text-black transition-all duration-200 group/link"
+                        >
+                          <span className="w-2 h-2 rounded-full bg-primary-yellow animate-pulse" />
+                          Live Demo
+                          <span className="group-hover/link:translate-x-1 transition-transform">↗</span>
+                        </a>
+                      )}
                       <div className="h-2 w-full bg-white/5 relative overflow-hidden">
                         <motion.div 
                           className={`absolute inset-0 ${project.color}`}

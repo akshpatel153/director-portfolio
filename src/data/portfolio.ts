@@ -80,6 +80,16 @@ export const GALLERY_PHOTOS = [
 
 export const PROJECTS = [
   {
+    title: "Bloom",
+    role: "Full-Stack Developer / UI Designer",
+    description: "A cinematic, animated wedding invitation platform. Built with Next.js and Framer Motion — couples get a personalised, immersive web experience instead of a paper invite. Features a live RSVP form, countdown timer, gallery, travel info, and a registry section.",
+    tags: ["Next.js", "Framer Motion", "UI/UX", "Wedding Tech"],
+    color: "bg-primary-yellow",
+    decorationColor: "yellow" as const,
+    shape: "circle" as const,
+    link: "https://wedding-invitation-steel-delta.vercel.app/wedding/sarah-james",
+  },
+  {
     title: "The Run",
     role: "Lead Editor",
     description: "A fast-paced commercial project where the sound design drove the visuals. I focused on aggressive pacing and heavy color grading to match the energy.",
