@@ -1,81 +1,127 @@
-import { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { GALLERY_PHOTOS } from '../../data/portfolio';
-import { Lightbox } from './Lightbox';
+import { GalleryLightbox } from './GalleryLightbox';
 import { playClickSound } from '../../lib/sounds';
 
+const ROW_ONE = GALLERY_PHOTOS.slice(0, Math.ceil(GALLERY_PHOTOS.length / 2));
+const ROW_TWO = GALLERY_PHOTOS.slice(Math.ceil(GALLERY_PHOTOS.length / 2));
+
+function MarqueeRow({
+  photos,
+  direction = 1,
+  onOpen,
+}: {
+  photos: typeof GALLERY_PHOTOS;
+  direction?: 1 | -1;
+  onOpen: (index: number) => void;
+}) {
+  const [paused, setPaused] = useState(false);
+  // Duplicate for seamless loop
+  const doubled = [...photos, ...photos];
+
+  return (
+    <div
+      className="overflow-hidden w-full"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <motion.div
+        className="flex gap-4"
+        animate={{
+          x: direction === 1 ? ['0%', '-50%'] : ['-50%', '0%'],
+        }}
+        transition={{
+          duration: 30,
+          ease: 'linear',
+          repeat: Infinity,
+        }}
+        style={{ animationPlayState: paused ? 'paused' : 'running' }}
+      >
+        {doubled.map((photo, i) => (
+          <div
+            key={i}
+            onClick={() => {
+              playClickSound();
+              onOpen(i % photos.length);
+            }}
+            className="relative shrink-0 w-[28vw] h-[22vw] overflow-hidden border-2 border-white/10 group cursor-zoom-in"
+          >
+            <img
+              src={photo.src}
+              alt={photo.title}
+              loading="lazy"
+              className="w-full h-full object-cover grayscale group-hover:grayscale-0 scale-105 group-hover:scale-100 transition-all duration-700"
+            />
+            {/* Overlay on hover */}
+            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <div className="border-2 border-white px-4 py-2 text-white font-black uppercase tracking-[0.2em] text-xs">
+                View
+              </div>
+            </div>
+            {/* Red corner accent */}
+            <div className="absolute bottom-0 left-0 w-6 h-6 bg-primary-red opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
 export function DesktopScrollGallery() {
-  const targetRef = useRef<HTMLDivElement>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-  });
+  const openLightbox = (index: number) => {
+    // map row-two index back to full array
+    setLightboxIndex(index);
+  };
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-
-  // Dynamically calculate the horizontal scroll distance.
-  // The track width is basically (40vw + 3rem gap) * numPhotos.
-  // We want to scroll from 0 to -(totalWidth - 100vw).
-  const x = useTransform(smoothProgress, [0, 1], ["0%", `-${(GALLERY_PHOTOS.length * 40) + ((GALLERY_PHOTOS.length - 1) * 3) - 100}vw`]);
-
-  const [lightbox, setLightbox] = useState<{ isOpen: boolean; image: string | null; title: string | null }>({
-    isOpen: false,
-    image: null,
-    title: null
-  });
-
-  const openLightbox = (image: string, title: string) => {
-    playClickSound();
-    setLightbox({ isOpen: true, image, title });
+  const openRowTwo = (index: number) => {
+    setLightboxIndex(index + ROW_ONE.length);
   };
 
   return (
-    <section ref={targetRef} className="relative h-[450vh] bg-[#121212] hidden md:block w-full z-20 overflow-visible">
-      <div className="sticky top-[10vh] h-[80vh] overflow-hidden flex items-center border-y-4 border-black z-10 bg-black shadow-[0_0_50px_rgba(0,0,0,0.5)]">
-
-        {/* Floating section title */}
-        <div className="absolute top-12 left-12 z-10 pointer-events-none">
-          <h2 className="text-6xl font-black uppercase tracking-tighter text-white drop-shadow-[4px_4px_0px_black] border-l-4 border-primary-yellow bg-black/50 backdrop-blur-sm px-6 py-2">
-            Gallery
-          </h2>
+    <section className="hidden md:block w-full bg-[#0a0a0a] py-20 overflow-hidden border-y-4 border-black relative">
+      {/* Section label */}
+      <div className="flex items-center justify-between px-12 mb-10">
+        <div className="flex items-center gap-6">
+          <div className="w-1 h-16 bg-primary-yellow" />
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-white/30 mb-1">— Visual Archive</p>
+            <h2 className="text-5xl font-black uppercase tracking-tighter text-white leading-none">
+              Gallery
+            </h2>
+          </div>
         </div>
-
-        {/* The moving horizontal track */}
-        <motion.div 
-          style={{ x, willChange: "transform" }} 
-          className="flex h-[70vh] gap-[3vw] px-12"
-        >
-          {GALLERY_PHOTOS.map((photo, index) => (
-            <div
-              key={index}
-              onClick={() => openLightbox(photo.src, photo.title)}
-              className="relative h-full w-[40vw] shrink-0 border-4 border-white overflow-hidden group shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] cursor-zoom-in"
-            >
-              <img
-                src={photo.src}
-                alt={photo.title}
-                decoding="async"
-                loading="lazy"
-                className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110"
-              />
-              <div className="absolute bottom-0 right-0 bg-primary-red text-white font-bold uppercase tracking-widest py-3 px-8 border-t-4 border-l-4 border-white">
-                {photo.title}
-              </div>
-            </div>
-          ))}
-        </motion.div>
+        <div className="text-right">
+          <p className="text-white/20 text-xs font-bold uppercase tracking-widest">
+            Hover to pause<br />Click to expand
+          </p>
+        </div>
       </div>
 
-      <Lightbox 
-        isOpen={lightbox.isOpen} 
-        onClose={() => setLightbox({ ...lightbox, isOpen: false })} 
-        image={lightbox.image} 
-        title={lightbox.title} 
-      />
+      {/* Row 1 — scrolls left */}
+      <div className="mb-4">
+        <MarqueeRow photos={ROW_ONE} direction={1} onOpen={openLightbox} />
+      </div>
+
+      {/* Row 2 — scrolls right */}
+      <MarqueeRow photos={ROW_TWO.length ? ROW_TWO : ROW_ONE} direction={-1} onOpen={openRowTwo} />
+
+      {/* Bottom label strip */}
+      <div className="flex justify-between items-center px-12 mt-10 text-[10px] font-black uppercase tracking-[0.3em] text-white/20">
+        <span>{GALLERY_PHOTOS.length} SHOTS</span>
+        <span>4K · PRORES · ARCHIVE</span>
+        <span>DIRECTORE // {new Date().getFullYear()}</span>
+      </div>
+
+      {lightboxIndex !== null && (
+        <GalleryLightbox
+          photos={GALLERY_PHOTOS}
+          initialIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+        />
+      )}
     </section>
   );
 }
