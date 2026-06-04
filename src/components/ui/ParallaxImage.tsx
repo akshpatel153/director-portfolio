@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 interface ParallaxImageProps {
   src: string;
@@ -16,8 +16,15 @@ export function ParallaxImage({ src, alt, height = "h-[100vh]", className = "" }
     offset: ["start end", "end start"]
   });
 
-  // Increased translation range for a more pronounced parallax effect
-  const y = useTransform(scrollYProgress, [0, 1], ["-30%", "30%"]);
+  // Calculate pixel translation instead of percentage for hardware acceleration and subpixel rendering
+  const yRaw = useTransform(scrollYProgress, [0, 1], [-150, 150]);
+  
+  // Smooth the raw scroll inputs using a spring dampener (mass/stiffness/damping physics)
+  const y = useSpring(yRaw, { 
+    stiffness: 90, 
+    damping: 25, 
+    restDelta: 0.001 
+  });
 
   return (
     <div 
@@ -26,7 +33,7 @@ export function ParallaxImage({ src, alt, height = "h-[100vh]", className = "" }
     >
       <motion.div
         style={{ y }}
-        className="absolute inset-0 -top-[40%] -bottom-[40%] w-full h-[180%]"
+        className="absolute inset-x-0 -top-[150px] w-full h-[calc(100%+300px)]"
       >
         <img 
           src={src} 
