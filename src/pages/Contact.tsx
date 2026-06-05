@@ -7,6 +7,144 @@ import { playClickSound } from '../lib/sounds';
 export function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  
+  // Interactive Slate States
+  const [name, setName] = useState('');
+  const [prodType, setProdType] = useState('COMMERCIAL');
+  const [messageLength, setMessageLength] = useState(0);
+  const [isClacking, setIsClacking] = useState(false);
+
+  const triggerClack = () => {
+    setIsClacking(true);
+    playClickSound();
+    setTimeout(() => setIsClacking(false), 300);
+  };
+
+  const takeNum = Math.min(99, Math.max(1, Math.ceil(messageLength / 10)));
+
+  const downloadSlate = () => {
+    playClickSound();
+    const canvas = document.createElement('canvas');
+    canvas.width = 800;
+    canvas.height = 600;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Draw background
+    ctx.fillStyle = '#111111';
+    ctx.fillRect(0, 0, 800, 600);
+
+    // Draw outer white border
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 8;
+    ctx.strokeRect(20, 20, 760, 560);
+
+    // Draw clapper board top stripes area
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(24, 24, 752, 60);
+
+    ctx.fillStyle = '#000000';
+    // Draw diagonal lines
+    for (let x = 24; x < 780; x += 80) {
+      ctx.beginPath();
+      ctx.moveTo(x, 24);
+      ctx.lineTo(x + 40, 24);
+      ctx.lineTo(x + 10, 84);
+      ctx.lineTo(x - 30, 84);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // Grid lines
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 4;
+    
+    // Horizontal divider below stripes
+    ctx.beginPath();
+    ctx.moveTo(20, 84);
+    ctx.lineTo(780, 84);
+    ctx.stroke();
+
+    // Horizontal divider below Roll/Scene/Take
+    ctx.beginPath();
+    ctx.moveTo(20, 240);
+    ctx.lineTo(780, 240);
+    ctx.stroke();
+
+    // Horizontal divider below Director/Camera
+    ctx.beginPath();
+    ctx.moveTo(20, 400);
+    ctx.lineTo(780, 400);
+    ctx.stroke();
+
+    // Vertical divider 1 (Roll / Scene)
+    ctx.beginPath();
+    ctx.moveTo(260, 84);
+    ctx.lineTo(260, 240);
+    ctx.stroke();
+
+    // Vertical divider 2 (Scene / Take)
+    ctx.beginPath();
+    ctx.moveTo(560, 84);
+    ctx.lineTo(560, 240);
+    ctx.stroke();
+
+    // Vertical divider 3 (Date / FPS)
+    ctx.beginPath();
+    ctx.moveTo(500, 400);
+    ctx.lineTo(500, 580);
+    ctx.stroke();
+
+    // Text Helper functions
+    const drawLabel = (text: string, x: number, y: number) => {
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+      ctx.font = '900 12px "Outfit", sans-serif';
+      ctx.fillText(text.toUpperCase(), x, y);
+    };
+
+    const drawValue = (text: string, x: number, y: number, fontSize = 32, color = '#ffffff') => {
+      ctx.fillStyle = color;
+      ctx.font = `900 ${fontSize}px "Outfit", sans-serif`;
+      ctx.fillText(text.toUpperCase(), x, y);
+    };
+
+    // Draw Labels & Values
+    drawLabel('ROLL', 40, 120);
+    drawValue('R24-A', 40, 185, 36, '#F0C020'); // Yellow ROLL
+
+    drawLabel('SCENE', 280, 120);
+    drawValue(prodType, 280, 185, 32, '#1040C0'); // Blue SCENE
+
+    drawLabel('TAKE', 580, 120);
+    drawValue(String(takeNum).padStart(2, '0'), 580, 185, 36, '#D02020'); // Red TAKE
+
+    drawLabel('DIRECTOR', 40, 280);
+    drawValue('AKSH PATEL', 40, 345, 28);
+
+    drawLabel('CAMERA / CLIENT', 40, 440);
+    drawValue(name.trim() || 'SENDER', 40, 505, 28, '#F0C020');
+
+    drawLabel('DATE', 520, 440);
+    drawValue(new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }), 520, 505, 20);
+
+    // Draw brand triangle logo in canvas
+    ctx.fillStyle = '#F0C020';
+    ctx.beginPath();
+    ctx.moveTo(700, 310);
+    ctx.lineTo(670, 360);
+    ctx.lineTo(730, 360);
+    ctx.closePath();
+    ctx.fill();
+
+    // Trigger image download
+    const url = canvas.toDataURL('image/png');
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `PRODUCTION_SLATE_${prodType}_${name.trim() || 'SENDER'}.png`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,6 +169,7 @@ export function Contact() {
         body: JSON.stringify({
           name: formData.get('name'),
           email: formData.get('email'),
+          prodType: formData.get('prodType'),
           message: formData.get('message'),
           time: clientTime,
         }),
@@ -40,6 +179,9 @@ export function Contact() {
 
       setStatus('sent');
       formRef.current.reset();
+      setName('');
+      setProdType('COMMERCIAL');
+      setMessageLength(0);
     } catch (error) {
       console.error('Send error:', error);
       setStatus('error');
@@ -64,7 +206,7 @@ export function Contact() {
         <div className="max-w-5xl mx-auto flex flex-col lg:flex-row gap-16 relative z-10">
           
           {/* Left Column — Briefing & Social slate */}
-          <div className="flex-1 flex flex-col justify-between">
+          <div className="flex-1 flex flex-col justify-between gap-12">
             <div>
               <div className="flex items-center gap-3 mb-6">
                 <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/30">
@@ -78,15 +220,93 @@ export function Contact() {
                 <span className="text-primary-red">A Line.</span>
               </h3>
 
-              <div className="p-6 border border-white/10 bg-white/[0.01] mb-12 shadow-[8px_8px_0px_0px_#1040C0]">
-                <p className="text-lg font-medium leading-relaxed text-white/65">
-                  Whether it's a commercial brief, editing workflow inquiry, or collaboration proposals — leave a message and let's configure something.
-                </p>
+              {/* Interactive Visual Clapperboard Slate */}
+              <div 
+                className="w-full bg-[#111] border-4 border-white text-white p-4 font-black uppercase tracking-wider relative cursor-pointer select-none group/slate shadow-[12px_12px_0px_0px_#F0C020]"
+                onClick={triggerClack}
+              >
+                {/* Clapper Hinge Top Bar */}
+                <div className="relative h-10 w-full bg-white mb-4 overflow-hidden border-b-4 border-white origin-left">
+                  <motion.div 
+                    className="absolute inset-0 bg-white"
+                    animate={{ rotate: isClacking ? [-15, 0] : 0 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                    style={{ originX: 0, originY: 1 }}
+                  >
+                    {/* Stripes */}
+                    <div className="w-[120%] h-full flex transform -skew-x-[30deg] -translate-x-4">
+                      {Array(10).fill(null).map((_, i) => (
+                        <div 
+                          key={i} 
+                          className={`flex-1 h-full ${i % 2 === 0 ? 'bg-black' : 'bg-white'}`} 
+                        />
+                      ))}
+                    </div>
+                  </motion.div>
+                </div>
+
+                {/* Slate Grid content */}
+                <div className="grid grid-cols-3 border-2 border-white text-center text-xs divide-x-2 divide-y-2 divide-white">
+                  {/* Row 1 Labels */}
+                  <div className="p-2 text-white/40 text-[9px]">ROLL</div>
+                  <div className="p-2 text-white/40 text-[9px]">SCENE</div>
+                  <div className="p-2 text-white/40 text-[9px]">TAKE</div>
+                  
+                  {/* Row 1 Values */}
+                  <div className="p-4 text-sm sm:text-lg text-primary-yellow font-black truncate">R24-A</div>
+                  <div className="p-4 text-[10px] sm:text-base text-primary-blue font-black truncate">{prodType}</div>
+                  <div className="p-4 text-sm sm:text-lg text-primary-red font-black truncate">{String(takeNum).padStart(2, '0')}</div>
+
+                  {/* Row 2 Labels */}
+                  <div className="col-span-2 p-2 text-left text-white/40 text-[9px]">DIRECTOR</div>
+                  <div className="p-2 text-white/40 text-[9px]">FPS</div>
+
+                  {/* Row 2 Values */}
+                  <div className="col-span-2 p-4 text-left text-base truncate">AKSH PATEL</div>
+                  <div className="p-4 text-base">23.976</div>
+
+                  {/* Row 3 Labels */}
+                  <div className="col-span-2 p-2 text-left text-white/40 text-[9px]">CAMERA / CLIENT</div>
+                  <div className="p-2 text-white/40 text-[9px]">DATE</div>
+
+                  {/* Row 3 Values */}
+                  <div className="col-span-2 p-4 text-left text-base truncate text-primary-yellow">
+                    {name.trim() || 'SENDER'}
+                  </div>
+                  <div className="p-4 text-[10px] truncate">
+                    {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                  </div>
+                </div>
+
+                {/* Bottom decorative stats ticker */}
+                <div className="flex justify-between items-center text-[8px] text-white/20 mt-3 tracking-widest">
+                  <span>SYSTEM // OPERATIONAL</span>
+                  <span>TAP TO SYNC CLACK</span>
+                  <div className="flex items-center gap-1">
+                    <svg viewBox="0 0 100 100" className="w-2.5 h-2.5">
+                      <polygon points="50,0 0,100 100,100" fill="#F0C020" />
+                    </svg>
+                    <span>DIRECTORE</span>
+                  </div>
+                </div>
               </div>
+
+              {/* Download brief brief button */}
+              <button
+                type="button"
+                onClick={downloadSlate}
+                className="mt-6 w-full inline-flex items-center justify-center gap-3 border-2 border-dashed border-white/20 hover:border-white py-4 font-black uppercase tracking-widest text-[10px] text-white/50 hover:text-white transition-all cursor-pointer bg-white/[0.01] hover:bg-white/[0.02]"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                Download Briefing Slate
+              </button>
+
             </div>
             
             {/* Social icons row */}
-            <div className="mt-8">
+            <div className="mt-4">
               <span className="block text-[9px] font-black uppercase tracking-[0.3em] text-white/20 mb-4">
                 — Connect Transmission
               </span>
@@ -155,7 +375,7 @@ export function Contact() {
           {/* Right Column — Form Inputs */}
           <form 
             ref={formRef}
-            className="flex-1 space-y-6" 
+            className="flex-grow space-y-6 lg:max-w-md" 
             onSubmit={handleSubmit}
           >
             {status === 'sent' && (
@@ -188,15 +408,52 @@ export function Contact() {
                 id="name" 
                 name="name"
                 required
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  if (Math.random() > 0.7) triggerClack();
+                }}
                 disabled={status === 'sending'}
                 className="border-2 border-white/10 bg-white/[0.02] p-4 text-base font-bold text-white placeholder-white/20 focus:outline-none focus:border-primary-yellow focus:bg-white/[0.04] transition-all shadow-[4px_4px_0px_0px_rgba(255,255,255,0.02)] focus:shadow-[4px_4px_0px_0px_#F0C020] disabled:opacity-50"
                 placeholder="ENTER SENDER NAME"
               />
             </div>
+
+            {/* Dropdown for Production Slate */}
+            <div className="flex flex-col relative">
+              <label htmlFor="prodType" className="font-black uppercase tracking-[0.2em] text-[10px] text-white/40 mb-2">
+                02 // Production Type
+              </label>
+              <div className="relative">
+                <select 
+                  id="prodType" 
+                  name="prodType"
+                  required
+                  value={prodType}
+                  onChange={(e) => {
+                    setProdType(e.target.value);
+                    triggerClack();
+                  }}
+                  disabled={status === 'sending'}
+                  className="w-full border-2 border-white/10 bg-[#0d0d0d] p-4 pr-10 text-base font-bold text-white focus:outline-none focus:border-primary-blue focus:bg-white/[0.04] transition-all shadow-[4px_4px_0px_0px_rgba(255,255,255,0.02)] focus:shadow-[4px_4px_0px_0px_#1040C0] disabled:opacity-50 appearance-none cursor-pointer"
+                >
+                  <option value="COMMERCIAL">COMMERCIAL</option>
+                  <option value="NARRATIVE">NARRATIVE FILM</option>
+                  <option value="MUSIC VIDEO">MUSIC VIDEO</option>
+                  <option value="POST-PRODUCTION">POST-PRODUCTION</option>
+                  <option value="EXPERIMENTAL">EXPERIMENTAL</option>
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/40">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+            </div>
             
             <div className="flex flex-col">
               <label htmlFor="email" className="font-black uppercase tracking-[0.2em] text-[10px] text-white/40 mb-2">
-                02 // Email Address
+                03 // Email Address
               </label>
               <input 
                 type="email" 
@@ -211,13 +468,14 @@ export function Contact() {
             
             <div className="flex flex-col">
               <label htmlFor="message" className="font-black uppercase tracking-[0.2em] text-[10px] text-white/40 mb-2">
-                03 // Message / Brief
+                04 // Message / Brief
               </label>
               <textarea 
                 id="message" 
                 name="message"
                 rows={5}
                 required
+                onChange={(e) => setMessageLength(e.target.value.length)}
                 disabled={status === 'sending'}
                 className="border-2 border-white/10 bg-white/[0.02] p-4 text-base font-bold text-white placeholder-white/20 focus:outline-none focus:border-primary-red focus:bg-white/[0.04] transition-all shadow-[4px_4px_0px_0px_rgba(255,255,255,0.02)] focus:shadow-[4px_4px_0px_0px_#D02020] resize-none disabled:opacity-50"
                 placeholder="SPECIFY PRODUCTION BRIEF OR MESSAGE DETAILS..."

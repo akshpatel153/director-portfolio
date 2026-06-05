@@ -9,11 +9,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, email, message, time } = req.body as {
+  const { name, email, message, time, prodType } = req.body as {
     name: string;
     email: string;
     message: string;
     time?: string;
+    prodType?: string;
   };
 
   // Basic validation
@@ -80,11 +81,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                           <h2 style="font-size: 28px; font-weight: 900; text-transform: uppercase; color: #ffffff; margin: 0 0 4px 0; letter-spacing: -1px; line-height: 1.1;">
                             ${name}
                           </h2>
-                          <a href="mailto:${email}" style="font-size: 14px; font-weight: bold; color: #1040C0; text-decoration: none;">
+                          <a href="mailto:${email}" style="font-size: 14px; font-weight: bold; color: #1040C0; text-decoration: none; display: block; margin-bottom: 12px;">
                             ${email}
                           </a>
                           
-                          <div style="height: 16px;"></div>
+                          ${prodType ? `
+                          <div style="display: inline-block; background-color: #1040C0; color: #ffffff; font-size: 9px; font-weight: 900; padding: 4px 8px; border: 1px solid #ffffff; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">
+                            PROD TYPE // ${prodType}
+                          </div>
+                          ` : ''}
+                          
+                          <div style="height: 8px;"></div>
                           
                           <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
                             <tr>
