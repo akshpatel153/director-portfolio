@@ -59,23 +59,39 @@ export const ABOUT_PAGE_CONTENT = {
 };
 
 export const GALLERY_PHOTOS = [
-  { src: "/images/optimized/Image-1.webp", title: "Visual 01" },
-  { src: "/images/optimized/Image-2.webp", title: "Visual 02" },
-  { src: "/images/optimized/Image-3.webp", title: "Visual 03" },
-  { src: "/images/optimized/Image-4.webp", title: "Visual 04" },
-  { src: "/images/optimized/Image-7.webp", title: "Visual 05" },
-  { src: "/images/optimized/Image-9.webp", title: "Visual 06" },
-  { src: "/images/optimized/Image-13.webp", title: "Visual 07" },
-  { src: "/images/optimized/Image-14.webp", title: "Visual 08" },
-  { src: "/images/optimized/Image-15.webp", title: "Visual 09" },
-  { src: "/images/optimized/Image-16.webp", title: "Visual 10" },
-  { src: "/images/optimized/Image-re-1.webp", title: "Visual 11" },
-  { src: "/images/optimized/Image-re-2.webp", title: "Visual 12" },
-  { src: "/images/optimized/Image-re-3.webp", title: "Visual 13" },
-  { src: "/images/optimized/Image-re-5.webp", title: "Visual 14" },
-  { src: "/images/optimized/Image-ree-1.webp", title: "Visual 15" },
-  { src: "/images/optimized/Image-ree-2.webp", title: "Visual 16" },
-  { src: "/images/optimized/Image-ree-3.webp", title: "Visual 17" }
+  { src: "/images/optimized/Image-1.webp", title: "Visual 01", album: "archive" },
+  { src: "/images/optimized/Image-2.webp", title: "Visual 02", album: "archive" },
+  { src: "/images/optimized/Image-3.webp", title: "Visual 03", album: "archive" },
+  { src: "/images/optimized/Image-4.webp", title: "Visual 04", album: "archive" },
+  { src: "/images/optimized/Image-7.webp", title: "Visual 05", album: "archive" },
+  { src: "/images/optimized/Image-9.webp", title: "Visual 06", album: "archive" },
+  { src: "/images/optimized/Image-13.webp", title: "Visual 07", album: "archive" },
+  { src: "/images/optimized/Image-14.webp", title: "Visual 08", album: "archive" },
+  { src: "/images/optimized/Image-15.webp", title: "Visual 09", album: "archive" },
+  { src: "/images/optimized/Image-16.webp", title: "Visual 10", album: "archive" },
+  { src: "/images/optimized/Image-re-1.webp", title: "Visual 11", album: "archive" },
+  { src: "/images/optimized/Image-re-2.webp", title: "Visual 12", album: "archive" },
+  { src: "/images/optimized/Image-re-3.webp", title: "Visual 13", album: "archive" },
+  { src: "/images/optimized/Image-re-5.webp", title: "Visual 14", album: "archive" },
+  { src: "/images/optimized/Image-ree-1.webp", title: "Visual 15", album: "archive" },
+  { src: "/images/optimized/Image-ree-2.webp", title: "Visual 16", album: "archive" },
+  { src: "/images/optimized/Image-ree-3.webp", title: "Visual 17", album: "archive" },
+  
+  // Cobbler's Path Album
+  { src: "/images/optimized/cobblers-path/Image-1.webp", title: "Trail Entry", album: "cobblers-path" },
+  { src: "/images/optimized/cobblers-path/Image-2.webp", title: "Rocky Ascent", album: "cobblers-path" },
+  { src: "/images/optimized/cobblers-path/Image-3.webp", title: "Cliffside View", album: "cobblers-path" },
+  { src: "/images/optimized/cobblers-path/Image-4.webp", title: "Ocean Horizon", album: "cobblers-path" },
+  { src: "/images/optimized/cobblers-path/Image-5.webp", title: "Forest Canopy", album: "cobblers-path" },
+  { src: "/images/optimized/cobblers-path/Image-6.webp", title: "Stony Stepway", album: "cobblers-path" },
+  { src: "/images/optimized/cobblers-path/Image-7.webp", title: "Summit Marker", album: "cobblers-path" },
+  { src: "/images/optimized/cobblers-path/Image-8.webp", title: "Wind-Swept Ridge", album: "cobblers-path" },
+  { src: "/images/optimized/cobblers-path/Image-9.webp", title: "Coastal Overlook", album: "cobblers-path" },
+  { src: "/images/optimized/cobblers-path/Image-10.webp", title: "Lighthouse Sight", album: "cobblers-path" },
+  { src: "/images/optimized/cobblers-path/Image-11.webp", title: "Fern Pathway", album: "cobblers-path" },
+  { src: "/images/optimized/cobblers-path/Image-12.webp", title: "Coastal Mist", album: "cobblers-path" },
+  { src: "/images/optimized/cobblers-path/Image-13.webp", title: "Cove Descent", album: "cobblers-path" },
+  { src: "/images/optimized/cobblers-path/Image-14.webp", title: "Trail Endpoint", album: "cobblers-path" }
 ];
 
 export const PROJECTS = [

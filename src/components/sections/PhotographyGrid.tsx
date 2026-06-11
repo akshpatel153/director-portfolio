@@ -116,7 +116,14 @@ function FillerWithParallax() {
 }
 
 export function PhotographyGrid({ featured = false }: { featured?: boolean }) {
-  const displayPhotos = featured ? GALLERY_PHOTOS.slice(0, 6) : GALLERY_PHOTOS;
+  const [activeAlbum, setActiveAlbum] = useState<'all' | 'archive' | 'cobblers-path'>('all');
+
+  const displayPhotos = featured 
+    ? GALLERY_PHOTOS.filter(photo => photo.album === 'archive').slice(0, 6) 
+    : activeAlbum === 'all'
+      ? GALLERY_PHOTOS
+      : GALLERY_PHOTOS.filter(photo => photo.album === activeAlbum);
+
   const [lightbox, setLightbox] = useState<{ isOpen: boolean; image: string | null; title: string | null }>({
     isOpen: false,
     image: null,
@@ -163,6 +170,35 @@ export function PhotographyGrid({ featured = false }: { featured?: boolean }) {
         )}
       </div>
 
+      {/* Category Tabs */}
+      {!featured && (
+        <div className="px-6 md:px-12 mb-12 flex flex-wrap gap-4 relative z-20">
+          {[
+            { id: 'all', label: '01 // SHOW ALL' },
+            { id: 'archive', label: '02 // VISUAL ARCHIVE' },
+            { id: 'cobblers-path', label: "03 // COBBLER'S PATH" },
+          ].map((tab) => {
+            const isActive = activeAlbum === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => {
+                  playClickSound();
+                  setActiveAlbum(tab.id as any);
+                }}
+                className={`px-6 py-3 border-2 font-black uppercase tracking-widest text-xs transition-all cursor-pointer ${
+                  isActive
+                    ? 'border-primary-yellow bg-primary-yellow text-black shadow-[4px_4px_0px_0px_rgba(255,255,255,0.15)] translate-x-[2px] translate-y-[2px]'
+                    : 'border-white/20 text-white/50 hover:border-white hover:text-white bg-white/[0.01]'
+                }`}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
       {/* Asymmetric brutalist grid */}
       <div className="px-6 md:px-12 relative">
         {/* Background Watermark peeking through gaps */}
@@ -175,7 +211,7 @@ export function PhotographyGrid({ featured = false }: { featured?: boolean }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-1 border-4 border-black bg-black relative z-10">
           {displayPhotos.map((photo, i) => (
             <ParallaxPhoto 
-              key={i} 
+              key={photo.src} // Use unique src as key instead of index to prevent motion glitch during filter transitions
               photo={photo} 
               config={GRID_CONFIG[i % GRID_CONFIG.length]} 
               index={i} 
