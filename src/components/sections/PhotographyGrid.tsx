@@ -1,117 +1,47 @@
-import { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { GALLERY_PHOTOS } from '../../data/portfolio';
 import { Lightbox } from '../ui/Lightbox';
 import { playClickSound } from '../../lib/sounds';
 
-// Asymmetric brutalist grid config: [col-span, row-span, aspect]
-const GRID_CONFIG = [
-  { cols: 'md:col-span-2', aspect: 'aspect-video md:aspect-[16/7]' },  // wide hero
-  { cols: 'md:col-span-1', aspect: 'aspect-square' },
-  { cols: 'md:col-span-1', aspect: 'aspect-square' },
-  { cols: 'md:col-span-1', aspect: 'aspect-video md:aspect-[3/4]' },
-  { cols: 'md:col-span-2', aspect: 'aspect-video md:aspect-[16/7]' },  // wide hero
-  { cols: 'md:col-span-1', aspect: 'aspect-video md:aspect-[3/4]' },
-];
-
-function ParallaxPhoto({ photo, config, index, onClick }: {
+function MasonryPhoto({ photo, index, onClick }: {
   photo: { src: string; title: string };
-  config: { cols: string; aspect: string };
   index: number;
   onClick: () => void;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ 
-    target: ref, 
-    offset: ['start end', 'end start'] 
-  });
-  
-  // pronounced parallax movement
-  const y = useTransform(scrollYProgress, [0, 1], ['-25%', '25%']);
-
   return (
     <motion.div
-      ref={ref}
       onClick={onClick}
-      className={`${config.cols} relative overflow-hidden border-4 border-black group cursor-zoom-in`}
-      initial={{ opacity: 0, y: 60 }}
+      className="break-inside-avoid border-4 border-black bg-black relative overflow-hidden group cursor-zoom-in mb-4"
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.8, delay: index * 0.05, ease: 'circOut' }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.6, delay: (index % 3) * 0.05, ease: 'easeOut' }}
     >
-      <div className={`${config.aspect} w-full relative overflow-hidden bg-black`}>
-        {/* Parallax image with depth */}
+      <div className="w-full relative overflow-hidden bg-black">
+        {/* Hover zoom & grayscale-to-color transition */}
         <motion.img
-          style={{ y }}
           src={photo.src}
           alt={photo.title}
-          className="absolute inset-0 w-full h-[150%] -top-[25%] object-cover grayscale group-hover:grayscale-0 transition-[filter] duration-700"
+          whileHover={{ scale: 1.03 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+          className="w-full h-auto block grayscale group-hover:grayscale-0 transition-[filter] duration-750"
         />
 
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all duration-500 z-10" />
-
-        {/* Index stamp */}
-        <div className="absolute top-3 left-3 z-20 font-black text-white/40 text-6xl leading-none select-none pointer-events-none">
+        {/* Index Stamp on bottom left */}
+        <div className="absolute bottom-2 left-2 z-20 font-black text-white/30 text-3xl leading-none select-none pointer-events-none">
           {String(index + 1).padStart(2, '0')}
         </div>
 
-        {/* Red accent bar on hover */}
-        <motion.div
-          className="absolute bottom-0 left-0 w-full h-1 bg-primary-red z-20 origin-left"
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: index * 0.1 + 0.3 }}
-        />
+        {/* Title overlay on hover */}
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 z-10">
+          <span className="font-black text-xs uppercase tracking-widest bg-white text-black px-3 py-1.5 border-2 border-black shadow-[4px_4px_0px_0px_#D02020]">
+            {photo.title}
+          </span>
+        </div>
       </div>
     </motion.div>
-  );
-}
-
-function FillerWithParallax() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ 
-    target: ref, 
-    offset: ['start end', 'end start'] 
-  });
-  
-  const words = ["GRIT", "RAW", "SHARP", "CUT", "MOTION", "FRAME"];
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % words.length);
-    }, 2000); // Linger for 2 seconds (slow)
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div ref={ref} className="md:col-span-1 border-4 border-black bg-black overflow-hidden relative min-h-[300px] flex items-center justify-center group">
-      {/* Background Text Cycling with Fast-Slow-Fast Transition */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={index}
-            initial={{ x: 40, opacity: 0, filter: 'blur(20px)' }}
-            animate={{ x: 0, opacity: 0.15, filter: 'blur(0px)' }}
-            exit={{ x: -40, opacity: 0, filter: 'blur(20px)' }}
-            transition={{ 
-              duration: 0.4, 
-              ease: [0.23, 1, 0.32, 1], // Power4.out equivalent for snappy arrival
-              opacity: { duration: 0.2 }
-            }}
-            style={{ y: useTransform(scrollYProgress, [0, 1], ['20px', '-20px']) }}
-            className="flex items-center justify-center"
-          >
-            <span className="text-8xl font-black uppercase tracking-tighter whitespace-nowrap">
-              {words[index]}
-            </span>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-    </div>
   );
 }
 
@@ -134,10 +64,6 @@ export function PhotographyGrid({ featured = false }: { featured?: boolean }) {
     playClickSound();
     setLightbox({ isOpen: true, image, title });
   };
-
-  // Calculate filler slots for the archive page
-  const fillerCount = featured ? 0 : (3 - (displayPhotos.length % 3)) % 3;
-  const fillers = Array.from({ length: fillerCount });
 
   return (
     <section className={`w-full ${featured ? 'bg-black' : 'bg-[#121212]'} text-white py-24 border-b-8 border-black`} id="photography">
@@ -199,7 +125,7 @@ export function PhotographyGrid({ featured = false }: { featured?: boolean }) {
         </div>
       )}
 
-      {/* Asymmetric brutalist grid */}
+      {/* Asymmetric brutalist grid replaced by native aspect-ratio masonry */}
       <div className="px-6 md:px-12 relative">
         {/* Background Watermark peeking through gaps */}
         <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none select-none overflow-hidden">
@@ -208,20 +134,14 @@ export function PhotographyGrid({ featured = false }: { featured?: boolean }) {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-1 border-4 border-black bg-black relative z-10">
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 relative z-10">
           {displayPhotos.map((photo, i) => (
-            <ParallaxPhoto 
+            <MasonryPhoto 
               key={photo.src} // Use unique src as key instead of index to prevent motion glitch during filter transitions
               photo={photo} 
-              config={GRID_CONFIG[i % GRID_CONFIG.length]} 
               index={i} 
               onClick={() => openLightbox(photo.src, photo.title)}
             />
-          ))}
-          
-          {/* Animated Fillers with subtle depth and fast text cycling */}
-          {!featured && fillers.map((_, i) => (
-            <FillerWithParallax key={`filler-${i}`} />
           ))}
         </div>
       </div>
