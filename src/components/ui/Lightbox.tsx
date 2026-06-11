@@ -16,10 +16,17 @@ export function Lightbox({ isOpen, onClose, image, title }: LightboxProps) {
     } else {
       document.body.style.overflow = 'unset';
     }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
+    return () => { document.body.style.overflow = 'unset'; };
   }, [isOpen]);
+
+  // Close on Escape
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) onClose();
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [isOpen, onClose]);
 
   return (
     <AnimatePresence>
@@ -28,40 +35,42 @@ export function Lightbox({ isOpen, onClose, image, title }: LightboxProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          transition={{ duration: 0.4, ease: 'easeInOut' }}
           onClick={onClose}
-          className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
+          className="fixed inset-0 z-[200] bg-black/92 backdrop-blur-sm flex items-center justify-center p-6 md:p-16 cursor-zoom-out"
         >
-          {/* Close button */}
+          {/* Close — minimal X top right */}
           <button
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               playClickSound();
               onClose();
             }}
-            className="absolute top-8 right-8 text-white text-4xl font-black z-10 hover:rotate-90 transition-transform"
+            className="absolute top-6 right-8 text-white/40 hover:text-white transition-colors duration-200 z-10 leading-none"
+            aria-label="Close"
           >
-            ×
+            <span className="block w-6 h-px bg-current rotate-45 translate-y-px" />
+            <span className="block w-6 h-px bg-current -rotate-45 -translate-y-px" />
           </button>
 
-          {/* Image container */}
-          <motion.div
-            initial={{ scale: 0.9, y: 20 }}
-            animate={{ scale: 1, y: 0 }}
-            exit={{ scale: 0.9, y: 20 }}
-            className="relative max-w-full max-h-full flex flex-col items-center"
+          {/* Index hint — top left */}
+          {title && (
+            <div className="absolute top-6 left-8 font-mono text-white/25 text-xs uppercase tracking-widest">
+              {title}
+            </div>
+          )}
+
+          {/* Image — simply floats, no border */}
+          <motion.img
+            src={image}
+            alt={title || 'Gallery'}
+            initial={{ opacity: 0, scale: 0.96, y: 12 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 12 }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-full max-h-[88vh] object-contain select-none"
             onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={image}
-              alt={title || "Gallery"}
-              className="max-w-full max-h-[80vh] object-contain border-4 border-white shadow-[20px_20px_0px_0px_rgba(208,32,32,1)]"
-            />
-            
-            {title && (
-              <div className="mt-8 bg-white text-black px-6 py-3 font-black uppercase tracking-widest text-xl border-4 border-black shadow-[8px_8px_0px_0px_#1040C0]">
-                {title}
-              </div>
-            )}
-          </motion.div>
+          />
         </motion.div>
       )}
     </AnimatePresence>
